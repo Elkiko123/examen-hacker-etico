@@ -205,6 +205,62 @@
   .m-desc.ok{border-color:#86d3a1; background:var(--ok-soft); box-shadow:inset 3px 0 0 var(--ok)}
   .m-desc.no{border-color:#f0a8a8; background:var(--bad-soft); box-shadow:inset 3px 0 0 var(--bad)}
   .m-desc.dim{opacity:.55}
+
+  /* ---------- acceso: login / registro ---------- */
+  .auth-tabs{display:flex; gap:8px; margin:18px 0 16px; background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:5px}
+  .auth-tab{
+    flex:1; text-align:center; padding:10px 12px; border-radius:9px; font-size:13.5px; font-weight:650;
+    color:var(--muted); cursor:pointer; background:transparent; border:none; font-family:inherit; transition:.14s;
+  }
+  .auth-tab:hover{color:var(--txt)}
+  .auth-tab.on{background:#fff; color:var(--accent); box-shadow:0 1px 2px rgba(16,24,40,.07)}
+  .form-row{display:grid; gap:7px; margin-bottom:13px}
+  .form-row label{font-size:11.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--muted)}
+  .form-row input{
+    width:100%; background:#fff; border:1px solid var(--line2); border-radius:10px; padding:12px 13px;
+    font-size:14px; font-family:inherit; color:var(--body); transition:.14s;
+  }
+  .form-row input:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+  .auth-msg{font-size:13.2px; border-radius:9px; padding:11px 13px; margin-bottom:14px; line-height:1.5; display:none}
+  .auth-msg.err{display:block; background:var(--bad-soft); border:1px solid #f0a8a8; color:#b91c1c}
+  .auth-msg.ok{display:block; background:var(--ok-soft); border:1px solid #86d3a1; color:#15803d}
+  .auth-note{font-size:12.5px; color:var(--muted)}
+  .btn[disabled]{opacity:.6; cursor:wait}
+
+  /* ---------- cabecera: usuario y admin ---------- */
+  .head-actions{display:flex; gap:9px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+  .btn.sm{padding:8px 14px; font-size:13px; border-radius:9px}
+  .userchip{
+    display:flex; align-items:center; gap:9px; background:#fff; border:1px solid var(--line);
+    border-radius:999px; padding:5px 6px 5px 14px; font-size:13px; color:var(--txt); max-width:340px;
+  }
+  .userchip .u-id{display:flex; flex-direction:column; line-height:1.25; min-width:0}
+  .userchip .u-id b{font-weight:650; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .userchip .u-mail{color:var(--muted); font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .linkbtn{
+    background:none; border:none; color:var(--accent); font:inherit; font-size:12.5px; font-weight:650;
+    cursor:pointer; padding:7px 11px; border-radius:999px; transition:.14s;
+  }
+  .linkbtn:hover{background:var(--accent-soft)}
+
+  /* ---------- panel de accesos (admin) ---------- */
+  .adm-tools{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:16px 0 13px}
+  .tbl-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:11px; background:#fff}
+  table.adm{width:100%; border-collapse:collapse; font-size:12.8px; min-width:780px}
+  table.adm th{
+    background:var(--soft); text-align:left; padding:10px 9px; font-size:10.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:.04em; color:var(--muted); border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  table.adm td{padding:10px 9px; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.45}
+  table.adm tr:last-child td{border-bottom:none}
+  table.adm tbody tr:hover td{background:#fbfcfe}
+  .pill{display:inline-block; padding:2px 10px; border-radius:999px; font-size:11.5px; font-weight:700; background:var(--soft); border:1px solid var(--line); white-space:nowrap}
+  .pill.login{background:var(--ok-soft); border-color:#86d3a1; color:#15803d}
+  .pill.register{background:var(--accent-soft); border-color:#bcd0f6; color:var(--accent)}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12.3px; color:var(--body)}
+  .adm-empty{padding:30px 16px; text-align:center; color:var(--muted); font-size:13.5px}
+  .geo{color:var(--muted); font-size:12.2px}
   .fb ul{margin:6px 0 0; padding-left:19px}
   .ans-item{padding:7px 0; border-bottom:1px dashed var(--line2)}
   .ans-item:last-child{border-bottom:none}
@@ -299,6 +355,8 @@
     .match-wrap{column-gap:44px}
     .m-term,.m-desc{padding:10px 11px; font-size:13.4px}
     .m-desc{font-size:12.9px}
+    .head-actions{width:100%; justify-content:space-between; margin-top:8px}
+    .userchip{max-width:100%}
   }
 </style>
 </head>
@@ -313,13 +371,61 @@
     </div>
   </div>
   <div class="spacer"></div>
-  <div class="head-meta">Práctica con retroalimentación</div>
+  <div class="head-actions">
+    <button class="btn sm hidden" id="btnAdmin" type="button">📋 Accesos</button>
+    <div class="userchip hidden" id="userChip">
+      <div class="u-id"><b id="userName">—</b><span class="u-mail" id="userMail"></span></div>
+      <button class="linkbtn" id="btnLogout" type="button">Salir</button>
+    </div>
+    <div class="head-meta">Práctica con retroalimentación</div>
+  </div>
 </header>
 
 <div class="wrap">
 
+  <!-- ============ ACCESO (login / registro) ============ -->
+  <section id="auth" class="card">
+    <div class="eyebrow">Acceso requerido</div>
+    <h2>Inicia sesión para continuar</h2>
+    <p class="lead">
+      Este examen es <b>privado</b>: crea una cuenta o inicia sesión para poder resolverlo.
+      Cada acceso queda <b>registrado</b> con tu correo, la fecha y hora, la <b>ciudad y país</b>
+      desde donde entras, tu proveedor de internet y el dispositivo que usas.
+    </p>
+
+    <div class="auth-tabs">
+      <button class="auth-tab on" id="tabLogin" type="button">🔑 Iniciar sesión</button>
+      <button class="auth-tab" id="tabRegister" type="button">✨ Crear cuenta</button>
+    </div>
+
+    <div class="auth-msg" id="authMsg"></div>
+
+    <form id="authForm" novalidate>
+      <div class="form-row" id="rowName" hidden>
+        <label for="inpName">Nombre (opcional)</label>
+        <input id="inpName" type="text" autocomplete="name" placeholder="Tu nombre">
+      </div>
+      <div class="form-row">
+        <label for="inpEmail">Correo electrónico</label>
+        <input id="inpEmail" type="email" autocomplete="email" required placeholder="tucorreo@ejemplo.com">
+      </div>
+      <div class="form-row">
+        <label for="inpPass">Contraseña</label>
+        <input id="inpPass" type="password" autocomplete="current-password" required placeholder="Mínimo 6 caracteres">
+      </div>
+      <div class="actions">
+        <button class="btn" id="btnAuth" type="submit">Entrar →</button>
+        <span class="note" id="authNote">¿No tienes cuenta? Pulsa «Crear cuenta».</span>
+      </div>
+    </form>
+    <p class="warn" id="authCfgWarn" hidden>
+      ⚠️ Falta conectar Supabase: reemplaza <b>SUPABASE_URL</b> y <b>SUPABASE_ANON_KEY</b>
+      en <b>index.html</b> con los datos de tu proyecto.
+    </p>
+  </section>
+
   <!-- ============ INICIO ============ -->
-  <section id="inicio" class="card">
+  <section id="inicio" class="card hidden">
     <div class="eyebrow">Examen de práctica</div>
     <h2>Course Final Exam — Hacker Ético</h2>
     <p class="lead">
@@ -426,12 +532,44 @@
     <div class="review hidden" id="review"></div>
   </section>
 
+  <!-- ============ ADMIN: REGISTRO DE ACCESOS ============ -->
+  <section id="admin" class="card hidden">
+    <div class="eyebrow">Panel del administrador</div>
+    <h2>Registro de accesos</h2>
+    <p class="lead">
+      Quiénes han iniciado sesión o se han registrado, <b>cuándo</b> y <b>desde dónde</b>:
+      IP, ciudad, país, proveedor de internet, dispositivo, navegador y sistema operativo.
+    </p>
+
+    <div class="adm-tools">
+      <button class="btn sm" id="btnAdmRefresh" type="button">🔄 Actualizar</button>
+      <button class="btn sm" id="btnAdmBack" type="button">← Menú principal</button>
+      <span class="note" id="admCount"></span>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="adm">
+        <thead>
+          <tr>
+            <th>Fecha y hora</th><th>Correo</th><th>Tipo</th><th>IP</th>
+            <th>Ciudad</th><th>País</th><th>Red / ISP</th><th>Dispositivo</th><th>Navegador · SO</th>
+          </tr>
+        </thead>
+        <tbody id="admBody">
+          <tr><td colspan="9" class="adm-empty">Cargando…</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="warn">Los datos también se pueden consultar en el panel de Supabase → <b>Table Editor</b> → tabla <b>login_events</b> (o la vista <b>v_accessos</b>).</p>
+  </section>
+
 </div>
 
 <footer>
   Contenido textual de <a href="https://itexamanswers.net/ethical-hacker-course-final-exam-answers-self-paced.html" target="_blank" rel="noopener">ITExamAnswers.net — Ethical Hacker: Course Final Exam Answers (Self-Paced)</a> · EN original + ES traducción
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 /* =========================================================
    BASE DE PREGUNTAS (50)
@@ -1319,8 +1457,8 @@ $("btnToggleReview").onclick=()=>{
 };
 
 function show(id){
-  ["inicio","examen","resultados"].forEach(s=>$(s).classList.toggle("hidden", s!==id));
-  window.scrollTo({top:0,behavior:"smooth"});
+  ["auth","inicio","examen","resultados","admin"].forEach(s=>$(s).classList.toggle("hidden", s!==id));
+  if(id!=="admin") window.scrollTo({top:0,behavior:"smooth"});
 }
 
 function start(){
@@ -1698,6 +1836,276 @@ function buildReview(){
 
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* =========================================================
+   ACCESO CON SUPABASE (login / registro + control de accesos)
+   ========================================================= */
+const SUPABASE_URL="https://TU-PROYECTO.supabase.co";      // >>> pega aquí tu Project URL
+const SUPABASE_ANON_KEY="TU-ANON-KEY";                     // >>> pega aquí tu anon public key
+
+const SB_READY = !!(window.supabase)
+  && /^https:\/\/[a-z0-9-]+\.supabase\.(co|in)$/i.test(SUPABASE_URL)
+  && SUPABASE_ANON_KEY.length>30 && SUPABASE_ANON_KEY.indexOf("TU-ANON-KEY")<0;
+const sb = SB_READY ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+let currentUser=null, isAdmin=false, authMode="login";
+
+/* ---------- utilidades de pantalla de acceso ---------- */
+function authMsg(text,kind){
+  const m=$("authMsg");
+  m.className="auth-msg "+(kind||"err");
+  m.textContent=text||"";
+}
+function setAuthMode(mode){
+  authMode=mode;
+  $("tabLogin").classList.toggle("on",mode==="login");
+  $("tabRegister").classList.toggle("on",mode==="register");
+  $("rowName").hidden = mode!=="register";
+  $("btnAuth").textContent = mode==="login" ? "Entrar →" : "Crear cuenta →";
+  $("authNote").textContent = mode==="login"
+    ? "¿No tienes cuenta? Pulsa «Crear cuenta»."
+    : "¿Ya tienes cuenta? Pulsa «Iniciar sesión».";
+  $("inpPass").setAttribute("autocomplete", mode==="login"?"current-password":"new-password");
+  authMsg("");
+}
+function traduceError(err){
+  const m=(err&&err.message)||String(err||"");
+  const s=m.toLowerCase();
+  if(s.includes("invalid login credentials")) return "Correo o contraseña incorrectos.";
+  if(s.includes("email not confirmed")) return "Debes confirmar tu correo (revisa tu bandeja de entrada) antes de entrar.";
+  if(s.includes("user already registered")||s.includes("already been registered")) return "Ya existe una cuenta con ese correo. Inicia sesión.";
+  if(s.includes("password should be at least")||s.includes("password is too short")) return "La contraseña debe tener al menos 6 caracteres.";
+  if(s.includes("signup requires a valid password")) return "Escribe una contraseña válida (mínimo 6 caracteres).";
+  if(s.includes("unable to validate email")||s.includes("invalid format")) return "El correo no tiene un formato válido.";
+  if(s.includes("security purposes")||s.includes("rate limit")||s.includes("too many")) return "Demasiados intentos. Espera unos minutos y vuelve a intentarlo.";
+  if(s.includes("failed to fetch")||s.includes("networkerror")) return "No se pudo conectar con el servidor. Revisa tu conexión a internet.";
+  if(s.includes("database error")) return "Error al crear la cuenta. Revisa que el esquema SQL se haya ejecutado.";
+  return m || "Error inesperado. Inténtalo de nuevo.";
+}
+
+/* ---------- geolocalización aproximada por IP ---------- */
+async function getGeo(){
+  const urls=["https://ipapi.co/json/","https://ipwho.is/"];
+  for(const url of urls){
+    try{
+      const ctrl=new AbortController();
+      const to=setTimeout(()=>ctrl.abort(),6000);
+      const r=await fetch(url,{signal:ctrl.signal,headers:{Accept:"application/json"}});
+      clearTimeout(to);
+      if(!r.ok) continue;
+      const j=await r.json();
+      if(!j || j.error) continue;
+      return {
+        ip:j.ip||null,
+        city:j.city||null,
+        region:j.region||j.region_name||null,
+        country:j.country_name||j.country||null,
+        org:j.org||(j.connection&&(j.connection.isp||j.connection.org))||null,
+        latitude:(typeof j.latitude==="number")?j.latitude:null,
+        longitude:(typeof j.longitude==="number")?j.longitude:null
+      };
+    }catch(e){ /* probar el siguiente */ }
+  }
+  return {};
+}
+function deviceType(ua){
+  if(/ipad|tablet|playbook|silk/i.test(ua)) return "Tablet";
+  if(/mobi|android|iphone|ipod|windows phone/i.test(ua)) return "Móvil";
+  return "Escritorio";
+}
+function osName(ua){
+  if(/windows nt 10|windows nt 11/i.test(ua)) return "Windows 10/11";
+  if(/windows/i.test(ua)) return "Windows";
+  if(/iphone|ipad|ipod/i.test(ua)) return "iOS";
+  if(/mac os x|macintosh/i.test(ua)) return "macOS";
+  if(/android/i.test(ua)) return "Android";
+  if(/cros/i.test(ua)) return "ChromeOS";
+  if(/linux/i.test(ua)) return "Linux";
+  return "—";
+}
+function browserName(ua){
+  if(/edg\/|edgios|edge/i.test(ua)) return "Edge";
+  if(/opr\/|opera/i.test(ua)) return "Opera";
+  if(/chrome\/|crios|chromium/i.test(ua)) return "Chrome";
+  if(/firefox\/|fxios/i.test(ua)) return "Firefox";
+  if(/safari\//i.test(ua)) return "Safari";
+  return "—";
+}
+
+/* ---------- registrar el acceso en la base de datos ---------- */
+async function recordLogin(user,event){
+  if(!sb||!user) return;
+  const geo=await getGeo();
+  const ua=navigator.userAgent||"";
+  const row={
+    user_id:user.id,
+    email:user.email||null,
+    event:event,
+    ip:geo.ip||null,
+    city:geo.city||null,
+    region:geo.region||null,
+    country:geo.country||null,
+    org:geo.org||null,
+    latitude:geo.latitude,
+    longitude:geo.longitude,
+    user_agent:ua,
+    device:deviceType(ua),
+    browser:browserName(ua),
+    os:osName(ua)
+  };
+  const {error}=await sb.from("login_events").insert(row);
+  if(error) console.warn("No se pudo registrar el acceso:",error.message);
+}
+
+/* ---------- sesión ---------- */
+async function refreshAdminButton(){
+  isAdmin=false;
+  if(sb){
+    try{
+      const {data,error}=await sb.rpc("is_admin");
+      if(!error) isAdmin=!!data;
+    }catch(e){ /* sin permisos: se queda como usuario normal */ }
+  }
+  $("btnAdmin").classList.toggle("hidden",!isAdmin);
+}
+function setUiUser(){
+  const chip=$("userChip");
+  if(!currentUser){ chip.classList.add("hidden"); return; }
+  const meta=currentUser.user_metadata||{};
+  const name=meta.full_name||currentUser.email||"—";
+  $("userName").textContent=name;
+  $("userMail").textContent = meta.full_name ? (currentUser.email||"") : "";
+  chip.classList.remove("hidden");
+}
+async function enterApp(user,event){
+  currentUser=user;
+  await recordLogin(user,event);
+  await refreshAdminButton();
+  setUiUser();
+  show("inicio");
+}
+async function initAuth(){
+  if(!sb){
+    show("auth");
+    $("authCfgWarn").hidden=false;
+    $("btnAuth").disabled=true;
+    authMsg("Configura Supabase (URL y anon key) para habilitar el acceso.","err");
+    return;
+  }
+  sb.auth.onAuthStateChange(async (evt,sess)=>{
+    if(evt==="SIGNED_OUT"){
+      currentUser=null; isAdmin=false; setUiUser();
+      $("btnAdmin").classList.add("hidden");
+      $("authForm").reset(); setAuthMode("login");
+      show("auth");
+    }
+  });
+  const {data:{session}}=await sb.auth.getSession();
+  if(session){
+    currentUser=session.user;
+    await refreshAdminButton();
+    setUiUser();
+    show("inicio");
+  }else{
+    show("auth");
+  }
+}
+
+/* ---------- formularios ---------- */
+$("tabLogin").onclick=()=>setAuthMode("login");
+$("tabRegister").onclick=()=>setAuthMode("register");
+
+$("authForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  if(!sb){ authMsg("Supabase aún no está configurado.","err"); return; }
+  const email=$("inpEmail").value.trim();
+  const pass=$("inpPass").value;
+  const name=$("inpName").value.trim();
+  if(!email||!pass){ authMsg("Escribe tu correo y tu contraseña."); return; }
+  if(!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email)){ authMsg("El correo no tiene un formato válido."); return; }
+  if(pass.length<6){ authMsg("La contraseña debe tener al menos 6 caracteres."); return; }
+  const btn=$("btnAuth");
+  btn.disabled=true; btn.textContent="Procesando…";
+  authMsg("");
+  try{
+    let res;
+    if(authMode==="register"){
+      res=await sb.auth.signUp({email,password:pass,options:{data:{full_name:name||null}}});
+    }else{
+      res=await sb.auth.signInWithPassword({email,password:pass});
+    }
+    if(res.error) throw res.error;
+    if(authMode==="register" && !res.data.session){
+      setAuthMode("login");
+      authMsg("Cuenta creada ✅. Revisa tu correo para confirmar y luego inicia sesión.","ok");
+      return;
+    }
+    await enterApp(res.data.user, authMode==="register"?"register":"login");
+    $("authForm").reset();
+  }catch(err){
+    authMsg(traduceError(err));
+  }finally{
+    btn.disabled=false;
+    btn.textContent = authMode==="login" ? "Entrar →" : "Crear cuenta →";
+  }
+});
+
+$("btnLogout").onclick=async ()=>{
+  if(sb){ try{ await sb.auth.signOut(); }catch(e){} }
+  currentUser=null; isAdmin=false; setUiUser();
+  $("btnAdmin").classList.add("hidden");
+  show("auth");
+};
+
+/* ---------- panel de accesos (solo admin) ---------- */
+function fmtDate(iso){
+  try{ return new Date(iso).toLocaleString("es-MX",{dateStyle:"medium",timeStyle:"short"}); }
+  catch(e){ return iso; }
+}
+async function loadAccesses(){
+  const body=$("admBody");
+  body.innerHTML='<tr><td colspan="9" class="adm-empty">Cargando…</td></tr>';
+  $("admCount").textContent="";
+  if(!sb){ body.innerHTML='<tr><td colspan="9" class="adm-empty">Supabase no está configurado.</td></tr>'; return; }
+  const {data,error}=await sb.from("login_events")
+    .select("created_at,email,event,ip,city,region,country,org,device,browser,os")
+    .order("created_at",{ascending:false})
+    .limit(200);
+  if(error){
+    body.innerHTML=`<tr><td colspan="9" class="adm-empty">Error al consultar: ${escapeHtml(error.message)}</td></tr>`;
+    return;
+  }
+  $("admCount").textContent=`${data.length} registro(s) · máximo 200`;
+  if(!data.length){
+    body.innerHTML='<tr><td colspan="9" class="adm-empty">Aún no hay accesos registrados.</td></tr>';
+    return;
+  }
+  body.innerHTML=data.map(r=>{
+    const lugar=[r.city,r.region].filter(Boolean).join(", ");
+    return `<tr>
+      <td>${escapeHtml(fmtDate(r.created_at))}</td>
+      <td>${escapeHtml(r.email||"—")}</td>
+      <td><span class="pill ${r.event==="register"?"register":"login"}">${r.event==="register"?"Registro":"Inicio"}</span></td>
+      <td class="mono">${escapeHtml(r.ip||"—")}</td>
+      <td>${escapeHtml(lugar||"—")}</td>
+      <td>${escapeHtml(r.country||"—")}</td>
+      <td>${escapeHtml(r.org||"—")}</td>
+      <td>${escapeHtml(r.device||"—")}</td>
+      <td>${escapeHtml(r.browser||"—")} · ${escapeHtml(r.os||"—")}</td>
+    </tr>`;
+  }).join("");
+}
+$("btnAdmin").onclick=()=>{ show("admin"); loadAccesses(); };
+$("btnAdmRefresh").onclick=()=>loadAccesses();
+$("btnAdmBack").onclick=()=>show("inicio");
+
+/* ---------- arranque ---------- */
+if(window.__EXAM_PREVIEW__){
+  // modo vista previa (sin bloqueo de acceso)
+}else{
+  setAuthMode("login");
+  initAuth();
 }
 </script>
 </body>

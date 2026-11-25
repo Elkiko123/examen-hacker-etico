@@ -26,6 +26,8 @@ npx serve .
 - **Retroalimentación inmediata** opcional por pregunta, o al finalizar
 - **Puntaje, aprobado/reprobado** (mínimo 70 %) y tiempo
 - **Ejercicios de relación** a dos columnas (conceptos ↔ descripciones) unidos con **líneas**: clic en un concepto, clic en su descripción; se califican en verde/rojo al comprobar
+- **Acceso con cuenta** (login / registro) mediante **Supabase** — obligatorio para entrar al examen
+- **Registro de accesos**: IP, ciudad, país, red/ISP, dispositivo, navegador y sistema operativo de cada inicio de sesión, visible en un **panel de administrador** dentro de la página y en la tabla `login_events` de Supabase
 - Revisión completa con respuesta correcta, tu respuesta y explicación bilingual
 - Interfaz profesional y minimalista, responsive (mobile)
 
@@ -33,7 +35,22 @@ npx serve .
 
 | Archivo | Contenido |
 |---|---|
-| `index.html` | Todo en un solo archivo: datos de las preguntas (EN/ES), lógica y estilos |
+| `index.html` | Todo en un solo archivo: datos de las preguntas (EN/ES), lógica, autenticación y estilos |
+| `supabase-schema.sql` | Esquema de base de datos: perfiles, accesos, administradores, RLS y triggers |
+
+## Acceso (Supabase)
+
+1. Crea un proyecto en [supabase.com](https://supabase.com) (New project).
+2. En **SQL Editor → New query**, pega y ejecuta todo el contenido de `supabase-schema.sql`.
+3. En **Auth → Sign In / Providers → Email**, desactiva *Confirm email* (para poder entrar de inmediato tras registrarte).
+4. En **Settings → API**, copia la *Project URL* y la *anon public key* y pega ambas en `index.html`:
+
+```js
+const SUPABASE_URL="https://TU-PROYECTO.supabase.co";
+const SUPABASE_ANON_KEY="TU-ANON-KEY";
+```
+
+5. Pon tu correo en `supabase-schema.sql` (tabla `admins`) y vuelve a ejecutarlo para que seas administrador y puedas ver el botón **📋 Accesos**.
 
 ## Publicación
 
