@@ -39,8 +39,8 @@ create index if not exists login_events_user_id_idx    on public.login_events (u
 create table if not exists public.admins (
   email text primary key
 );
--- >>> CAMBIA ESTE CORREO POR EL TUYO <<<
-insert into public.admins (email) values ('tu-correo@gmail.com')
+-- >>> correo del administrador (quien ve el panel de accesos) <<<
+insert into public.admins (email) values ('caguamaserik123@gmail.com')
 on conflict (email) do nothing;
 
 -- ---------- 4. Función segura: ¿es admin el usuario actual? ----------
