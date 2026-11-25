@@ -388,9 +388,9 @@
     <div class="eyebrow">Acceso requerido</div>
     <h2>Inicia sesión para continuar</h2>
     <p class="lead">
-      Este examen es <b>privado</b>: crea una cuenta o inicia sesión para poder resolverlo.
-      Cada acceso queda <b>registrado</b> con tu correo, la fecha y hora, la <b>ciudad y país</b>
-      desde donde entras, tu proveedor de internet y el dispositivo que usas.
+      Este examen es <b>privado</b>: crea una cuenta con tu <b>nombre de usuario</b> y tu contraseña
+      para poder resolverlo. Cada acceso queda <b>registrado</b> con tu usuario, la fecha y hora,
+      la <b>ciudad y país</b> desde donde entras, tu proveedor de internet y el dispositivo que usas.
     </p>
 
     <div class="auth-tabs">
@@ -401,22 +401,23 @@
     <div class="auth-msg" id="authMsg"></div>
 
     <form id="authForm" novalidate>
-      <div class="form-row" id="rowName" hidden>
-        <label for="inpName">Nombre (opcional)</label>
-        <input id="inpName" type="text" autocomplete="name" placeholder="Tu nombre">
-      </div>
       <div class="form-row">
-        <label for="inpEmail">Correo electrónico</label>
-        <input id="inpEmail" type="email" autocomplete="email" required placeholder="tucorreo@ejemplo.com">
+        <label for="inpUser">Nombre de usuario</label>
+        <input id="inpUser" type="text" autocomplete="username" required maxlength="20"
+               placeholder="p. ej. hacker123">
       </div>
       <div class="form-row">
         <label for="inpPass">Contraseña</label>
-        <input id="inpPass" type="password" autocomplete="current-password" required placeholder="Mínimo 6 caracteres">
+        <input id="inpPass" type="password" required minlength="6" placeholder="Mínimo 6 caracteres">
       </div>
       <div class="actions">
         <button class="btn" id="btnAuth" type="submit">Entrar →</button>
         <span class="note" id="authNote">¿No tienes cuenta? Pulsa «Crear cuenta».</span>
       </div>
+      <p class="hint" style="margin:14px 0 0">
+        El usuario debe tener de <b>3 a 20 caracteres</b>: letras, números, punto, guion o guion bajo.
+        La contraseña, mínimo 6 caracteres.
+      </p>
     </form>
     <p class="warn" id="authCfgWarn" hidden>
       ⚠️ Falta conectar Supabase: reemplaza <b>SUPABASE_URL</b> y <b>SUPABASE_ANON_KEY</b>
@@ -551,7 +552,7 @@
       <table class="adm">
         <thead>
           <tr>
-            <th>Fecha y hora</th><th>Correo</th><th>Tipo</th><th>IP</th>
+            <th>Fecha y hora</th><th>Usuario</th><th>Tipo</th><th>IP</th>
             <th>Ciudad</th><th>País</th><th>Red / ISP</th><th>Dispositivo</th><th>Navegador · SO</th>
           </tr>
         </thead>
@@ -1854,14 +1855,14 @@ let currentUser=null, isAdmin=false, authMode="login";
 /* ---------- utilidades de pantalla de acceso ---------- */
 function authMsg(text,kind){
   const m=$("authMsg");
+  if(!text){ m.className="auth-msg"; m.textContent=""; return; }
   m.className="auth-msg "+(kind||"err");
-  m.textContent=text||"";
+  m.textContent=text;
 }
 function setAuthMode(mode){
   authMode=mode;
   $("tabLogin").classList.toggle("on",mode==="login");
   $("tabRegister").classList.toggle("on",mode==="register");
-  $("rowName").hidden = mode!=="register";
   $("btnAuth").textContent = mode==="login" ? "Entrar →" : "Crear cuenta →";
   $("authNote").textContent = mode==="login"
     ? "¿No tienes cuenta? Pulsa «Crear cuenta»."
@@ -1869,15 +1870,26 @@ function setAuthMode(mode){
   $("inpPass").setAttribute("autocomplete", mode==="login"?"current-password":"new-password");
   authMsg("");
 }
+/* el usuario se convierte en un correo interno único para Supabase Auth */
+const USER_MAIL_DOMAIN="@examen-hacker-etico.local";
+function userToEmail(u){ return String(u).trim().toLowerCase()+USER_MAIL_DOMAIN; }
+function emailToUser(e){ return String(e||"").split("@")[0]; }
+function normUser(u){ return String(u||"").trim().toLowerCase(); }
+const USER_RE=/^[a-z0-9](?:[a-z0-9_.-]{1,18}[a-z0-9])?$/;
+function currentUserLabel(){
+  if(!currentUser) return "—";
+  const meta=currentUser.user_metadata||{};
+  return meta.username || meta.full_name || emailToUser(currentUser.email) || "—";
+}
 function traduceError(err){
   const m=(err&&err.message)||String(err||"");
   const s=m.toLowerCase();
-  if(s.includes("invalid login credentials")) return "Correo o contraseña incorrectos.";
-  if(s.includes("email not confirmed")) return "Debes confirmar tu correo (revisa tu bandeja de entrada) antes de entrar.";
-  if(s.includes("user already registered")||s.includes("already been registered")) return "Ya existe una cuenta con ese correo. Inicia sesión.";
+  if(s.includes("invalid login credentials")) return "Nombre de usuario o contraseña incorrectos.";
+  if(s.includes("email not confirmed")) return "Esa cuenta aún no está activada (confirmación de correo pendiente).";
+  if(s.includes("user already registered")||s.includes("already been registered")) return "Ese nombre de usuario ya está en uso. Elige otro o inicia sesión.";
   if(s.includes("password should be at least")||s.includes("password is too short")) return "La contraseña debe tener al menos 6 caracteres.";
   if(s.includes("signup requires a valid password")) return "Escribe una contraseña válida (mínimo 6 caracteres).";
-  if(s.includes("unable to validate email")||s.includes("invalid format")) return "El correo no tiene un formato válido.";
+  if(s.includes("unable to validate email")||s.includes("invalid format")) return "No se pudo generar la cuenta. Usa letras, números, punto, guion o guion bajo en el usuario.";
   if(s.includes("security purposes")||s.includes("rate limit")||s.includes("too many")) return "Demasiados intentos. Espera unos minutos y vuelve a intentarlo.";
   if(s.includes("failed to fetch")||s.includes("networkerror")) return "No se pudo conectar con el servidor. Revisa tu conexión a internet.";
   if(s.includes("database error")) return "Error al crear la cuenta. Revisa que el esquema SQL se haya ejecutado.";
@@ -1972,10 +1984,8 @@ async function refreshAdminButton(){
 function setUiUser(){
   const chip=$("userChip");
   if(!currentUser){ chip.classList.add("hidden"); return; }
-  const meta=currentUser.user_metadata||{};
-  const name=meta.full_name||currentUser.email||"—";
-  $("userName").textContent=name;
-  $("userMail").textContent = meta.full_name ? (currentUser.email||"") : "";
+  $("userName").textContent=currentUserLabel();
+  $("userMail").textContent="";
   chip.classList.remove("hidden");
 }
 async function enterApp(user,event){
@@ -2019,26 +2029,26 @@ $("tabRegister").onclick=()=>setAuthMode("register");
 $("authForm").addEventListener("submit",async e=>{
   e.preventDefault();
   if(!sb){ authMsg("Supabase aún no está configurado.","err"); return; }
-  const email=$("inpEmail").value.trim();
+  const user=normUser($("inpUser").value);
   const pass=$("inpPass").value;
-  const name=$("inpName").value.trim();
-  if(!email||!pass){ authMsg("Escribe tu correo y tu contraseña."); return; }
-  if(!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email)){ authMsg("El correo no tiene un formato válido."); return; }
+  if(!user||!pass){ authMsg("Escribe tu nombre de usuario y tu contraseña."); return; }
+  if(user.length<3||user.length>20){ authMsg("El nombre de usuario debe tener de 3 a 20 caracteres."); return; }
+  if(!USER_RE.test(user)){ authMsg("El usuario solo puede llevar letras, números, punto, guion o guion bajo (sin espacios ni acentos), y debe empezar y terminar con letra o número."); return; }
   if(pass.length<6){ authMsg("La contraseña debe tener al menos 6 caracteres."); return; }
+  const email=userToEmail(user);
   const btn=$("btnAuth");
   btn.disabled=true; btn.textContent="Procesando…";
   authMsg("");
   try{
     let res;
     if(authMode==="register"){
-      res=await sb.auth.signUp({email,password:pass,options:{data:{full_name:name||null}}});
+      res=await sb.auth.signUp({email,password:pass,options:{data:{username:user,full_name:user}}});
     }else{
       res=await sb.auth.signInWithPassword({email,password:pass});
     }
     if(res.error) throw res.error;
     if(authMode==="register" && !res.data.session){
-      setAuthMode("login");
-      authMsg("Cuenta creada ✅. Revisa tu correo para confirmar y luego inicia sesión.","ok");
+      authMsg("La confirmación de correo sigue activada en Supabase. Pide al administrador que la desactive: Authentication → Sign In / Providers → Email → «Confirm email» = OFF.","err");
       return;
     }
     await enterApp(res.data.user, authMode==="register"?"register":"login");
@@ -2068,10 +2078,17 @@ async function loadAccesses(){
   body.innerHTML='<tr><td colspan="9" class="adm-empty">Cargando…</td></tr>';
   $("admCount").textContent="";
   if(!sb){ body.innerHTML='<tr><td colspan="9" class="adm-empty">Supabase no está configurado.</td></tr>'; return; }
-  const {data,error}=await sb.from("login_events")
-    .select("created_at,email,event,ip,city,region,country,org,device,browser,os")
-    .order("created_at",{ascending:false})
-    .limit(200);
+  const [ev,pr]=await Promise.all([
+    sb.from("login_events")
+      .select("created_at,user_id,email,event,ip,city,region,country,org,device,browser,os")
+      .order("created_at",{ascending:false})
+      .limit(200),
+    sb.from("profiles").select("id,full_name")
+  ]);
+  const error=ev.error;
+  const data=ev.data||[];
+  const nameById={};
+  (pr.data||[]).forEach(p=>{ nameById[p.id]=p.full_name; });
   if(error){
     body.innerHTML=`<tr><td colspan="9" class="adm-empty">Error al consultar: ${escapeHtml(error.message)}</td></tr>`;
     return;
@@ -2083,9 +2100,10 @@ async function loadAccesses(){
   }
   body.innerHTML=data.map(r=>{
     const lugar=[r.city,r.region].filter(Boolean).join(", ");
+    const usuario=(r.user_id&&nameById[r.user_id])||emailToUser(r.email);
     return `<tr>
       <td>${escapeHtml(fmtDate(r.created_at))}</td>
-      <td>${escapeHtml(r.email||"—")}</td>
+      <td><b>${escapeHtml(usuario||"—")}</b></td>
       <td><span class="pill ${r.event==="register"?"register":"login"}">${r.event==="register"?"Registro":"Inicio"}</span></td>
       <td class="mono">${escapeHtml(r.ip||"—")}</td>
       <td>${escapeHtml(lugar||"—")}</td>
