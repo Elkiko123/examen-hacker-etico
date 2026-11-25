@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Final: Ethical Hacker Para que estudien culeros — EN / ES</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --panel:#ffffff; --soft:#fafbfc; --line:#e7eaef; --line2:#d5dae2;
+    --txt:#12161c; --body:#3d4654; --muted:#78828f;
+    --accent:#2563eb; --accent-ink:#1d4ed8; --accent-soft:#eff4ff;
+    --ok:#15803d; --ok-soft:#f1fdf4; --bad:#b91c1c; --bad-soft:#fef4f4;
+    --es:#41598f; --es-soft:#f3f6fc;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--body);
+    font-family:"Inter","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.6; min-height:100vh;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  button,input,select{font-family:inherit}
+
+  /* ---------- cabecera ---------- */
+  header{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; gap:16px;
+    padding:14px 26px; background:rgba(255,255,255,.88);
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:12px; min-width:0}
+  .logo{
+    width:34px;height:34px;border-radius:9px;flex:none;
+    background:var(--accent); color:#fff; font-size:12.5px; font-weight:800;
+    display:grid; place-items:center; letter-spacing:.5px;
+  }
+  header h1{font-size:14.5px; margin:0; font-weight:650; color:var(--txt); letter-spacing:-.1px}
+  header .sub{font-size:11.5px; color:var(--muted); margin-top:1px}
+  .spacer{flex:1}
+  .head-meta{font-size:11.5px; color:var(--muted); white-space:nowrap}
+
+  .wrap{max-width:860px; margin:0 auto; padding:34px 20px 70px}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:16px;
+    padding:32px 34px; box-shadow:0 1px 2px rgba(16,24,40,.04), 0 12px 28px -20px rgba(16,24,40,.25);
+  }
+
+  .eyebrow{
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.9px;
+    color:var(--accent); margin-bottom:8px;
+  }
+  h2{margin:0 0 10px; font-size:23px; font-weight:700; color:var(--txt); letter-spacing:-.4px; line-height:1.3}
+  p.lead{color:var(--muted); line-height:1.65; margin:0 0 24px; font-size:14.5px}
+  p.lead b{color:var(--body); font-weight:600}
+
+  .field-label{
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.8px;
+    color:var(--muted); margin:24px 0 10px;
+  }
+
+  /* ---------- selector de idioma ---------- */
+  .langopts{display:flex; gap:6px; background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:5px}
+  .langopt{
+    flex:1; min-width:0; text-align:center; padding:10px 8px; border-radius:8px;
+    cursor:pointer; font-size:13.5px; color:var(--body); transition:.15s; border:1px solid transparent;
+  }
+  .langopt:hover{background:#fff; border-color:var(--line)}
+  .langopt.on{background:#fff; border-color:var(--line2); color:var(--accent); font-weight:650; box-shadow:0 1px 2px rgba(16,24,40,.06)}
+  .langopt small{display:block; color:var(--muted); font-size:11px; font-weight:400; margin-top:2px}
+
+  /* ---------- estadísticas ---------- */
+  .stats{
+    display:flex; flex-wrap:wrap; background:var(--soft); border:1px solid var(--line);
+    border-radius:12px; overflow:hidden; margin:20px 0;
+  }
+  .stat{flex:1; min-width:110px; padding:15px 12px; text-align:center; border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat b{display:block; font-size:19px; font-weight:700; color:var(--txt); letter-spacing:-.3px}
+  .stat span{font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.7px}
+
+  /* ---------- opciones del examen ---------- */
+  .opts{display:grid; gap:8px}
+  .opt-row{
+    display:flex; align-items:center; gap:14px; background:#fff;
+    border:1px solid var(--line); border-radius:11px; padding:13px 16px; cursor:pointer; transition:.15s;
+  }
+  .opt-row:hover{border-color:var(--line2); background:var(--soft)}
+  .opt-row label{cursor:pointer; flex:1; font-size:14px; color:var(--body)}
+  .opt-row label b{color:var(--txt); font-weight:600}
+  .opt-row input{
+    appearance:none; -webkit-appearance:none; flex:none; margin:0;
+    width:36px; height:21px; border-radius:99px; background:#dfe3e9; position:relative;
+    transition:.18s; cursor:pointer; border:none;
+  }
+  .opt-row input::after{
+    content:""; position:absolute; top:2.5px; left:2.5px; width:16px; height:16px;
+    background:#fff; border-radius:50%; transition:.18s; box-shadow:0 1px 2px rgba(16,24,40,.25);
+  }
+  .opt-row input:checked{background:var(--accent)}
+  .opt-row input:checked::after{transform:translateX(15px)}
+
+  /* ---------- botones ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--accent); color:#fff; border:1px solid transparent;
+    padding:12px 22px; border-radius:10px; font-size:14.5px; font-weight:600;
+    cursor:pointer; transition:.15s; letter-spacing:-.1px;
+  }
+  .btn:hover{background:var(--accent-ink); transform:translateY(-1px)}
+  .btn:active{transform:none}
+  .btn.ghost{background:#fff; border-color:var(--line2); color:var(--txt)}
+  .btn.ghost:hover{background:var(--soft); border-color:#bfc7d2; transform:none}
+  .btn.ok{background:var(--ok)}
+  .btn.ok:hover{background:#146c35}
+  .btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+  [hidden]{display:none!important}
+  .btn:focus-visible, .langopt:focus-visible, .choice:focus-within{outline:2px solid var(--accent); outline-offset:2px}
+  .actions{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-top:26px}
+  .note{font-size:12.5px; color:var(--muted)}
+  .warn{font-size:12.5px; color:#94710c; margin:18px 0 0; padding-top:16px; border-top:1px solid var(--line)}
+
+  /* ---------- examen ---------- */
+  .meta{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+        font-size:12px; color:var(--muted); letter-spacing:.2px}
+  .qnum{color:var(--txt); font-weight:700}
+  #typeTag{
+    background:var(--accent-soft); color:var(--accent); padding:3px 10px; border-radius:99px;
+    font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.6px;
+  }
+  .progress{height:4px; background:#eceff3; border-radius:99px; overflow:hidden; margin:12px 0 18px}
+  .progress i{display:block; height:100%; background:var(--accent); border-radius:99px; transition:width .35s ease}
+
+  .qtext{font-size:18px; line-height:1.6; color:var(--txt); font-weight:650; letter-spacing:-.2px; margin:0 0 6px}
+  .qtext .t-en{white-space:pre-line}
+  .qtext .t-es{
+    white-space:pre-line; color:var(--es); font-weight:500; font-size:16px;
+    margin-top:10px; padding-top:10px; border-top:1px solid var(--line);
+  }
+  .hint{font-size:12px; color:var(--muted); margin:10px 0 14px}
+
+  .choices{display:grid; gap:9px; margin-top:16px}
+  .choice{
+    display:flex; gap:13px; align-items:flex-start; background:#fff;
+    border:1px solid var(--line); border-radius:11px; padding:14px 16px;
+    cursor:pointer; transition:.14s; font-size:14.3px; line-height:1.5; color:var(--body);
+  }
+  .choice:hover{border-color:var(--line2); background:var(--soft)}
+  .choice input{
+    appearance:none; -webkit-appearance:none; margin:2px 0 0; flex:none;
+    width:18px; height:18px; border:1.5px solid var(--line2); background:#fff;
+    cursor:pointer; position:relative; transition:.14s; border-radius:50%;
+  }
+  .choice input[type="checkbox"]{border-radius:5px}
+  .choice:hover input{border-color:var(--accent)}
+  .choice input:checked{background:var(--accent); border-color:var(--accent); box-shadow:inset 0 0 0 3.5px #fff}
+  .choice.sel{border-color:var(--accent); background:var(--accent-soft)}
+  .choice.correct{border-color:#86d3a1; background:var(--ok-soft)}
+  .choice.correct input:checked{background:var(--ok); border-color:var(--ok)}
+  .choice.wrong{border-color:#f0a8a8; background:var(--bad-soft)}
+  .choice.wrong input:checked{background:var(--bad); border-color:var(--bad)}
+  .choice.dim{opacity:.5}
+  .o-en{display:block; color:var(--txt)}
+  .o-es{display:block; color:var(--es); font-size:13.2px; margin-top:3px}
+
+  /* ---------- ejercicios de relación: conceptos ↔ descripciones ---------- */
+  .m-hint{
+    font-size:12.8px; color:var(--muted); background:var(--soft); border:1px dashed var(--line2);
+    border-radius:9px; padding:9px 12px; margin-bottom:13px; transition:.14s;
+  }
+  .match-wrap{
+    position:relative; display:grid; grid-template-columns:1fr 1fr;
+    column-gap:78px; align-items:start;
+  }
+  .mcol{display:flex; flex-direction:column; gap:9px; min-width:0}
+  .m-head{
+    font-size:10.8px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+    color:var(--muted); padding:0 2px 2px;
+  }
+  .mlines{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; overflow:visible; z-index:0}
+  .ln{fill:none; stroke:#a9b4c4; stroke-width:2; stroke-linecap:round}
+  .ln.ok{stroke:var(--ok)}
+  .ln.no{stroke:var(--bad)}
+  .ln-dot{fill:#a9b4c4}
+  .ln-dot.ok{fill:var(--ok)}
+  .ln-dot.no{fill:var(--bad)}
+  .m-term,.m-desc{
+    position:relative; z-index:1; display:block; width:100%; text-align:left; font:inherit;
+    background:#fff; border:1px solid var(--line); border-radius:11px; padding:12px 14px;
+    font-size:14.2px; line-height:1.5; color:var(--body); cursor:pointer; transition:.14s;
+  }
+  .m-term{font-weight:650; color:var(--txt)}
+  .m-desc{font-size:13.7px}
+  .m-term:hover,.m-desc:hover{border-color:var(--line2); background:var(--soft)}
+  .m-term:focus-visible,.m-desc:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .m-term.on{border-color:var(--accent); background:var(--accent-soft); box-shadow:0 0 0 3px var(--accent-soft)}
+  .m-term.linked{border-color:#c8d2e0}
+  .m-desc.used{box-shadow:inset 3px 0 0 var(--accent); background:#fbfcfe}
+  .m-term .m-es{display:block; color:var(--es); font-weight:500; font-size:12.9px; margin-top:3px}
+  .m-desc .d-en{display:block; color:var(--body)}
+  .m-desc .d-es{display:block; color:var(--es); font-size:13.1px; margin-top:3px}
+  .m-term:disabled,.m-desc:disabled{cursor:default}
+  .m-term.ok{border-color:#86d3a1; background:var(--ok-soft); box-shadow:inset 3px 0 0 var(--ok)}
+  .m-term.no{border-color:#f0a8a8; background:var(--bad-soft); box-shadow:inset 3px 0 0 var(--bad)}
+  .m-desc.ok{border-color:#86d3a1; background:var(--ok-soft); box-shadow:inset 3px 0 0 var(--ok)}
+  .m-desc.no{border-color:#f0a8a8; background:var(--bad-soft); box-shadow:inset 3px 0 0 var(--bad)}
+  .m-desc.dim{opacity:.55}
+  .fb ul{margin:6px 0 0; padding-left:19px}
+  .ans-item{padding:7px 0; border-bottom:1px dashed var(--line2)}
+  .ans-item:last-child{border-bottom:none}
+  .ans-item .o-es{margin-top:2px}
+  .ans-item b{color:var(--txt); font-weight:650}
+  .ans-item .m-alt{color:var(--es); font-weight:500}
+  .ans-item .d-en{color:var(--body); margin-top:3px; line-height:1.55}
+  .ans-item .d-es{color:var(--es); margin-top:2px; line-height:1.55; font-size:13.4px}
+
+  /* ---------- retroalimentación ---------- */
+  .fb{
+    margin-top:18px; border-radius:11px; padding:16px 18px; font-size:14px; line-height:1.62;
+    border:1px solid var(--line); background:var(--soft); color:var(--body);
+  }
+  .fb .exp-txt{white-space:pre-line; margin-top:6px}
+  .fb.good{border-color:#86d3a1; background:var(--ok-soft)}
+  .fb.bad{border-color:#f0a8a8; background:var(--bad-soft)}
+  .fb b.tag{display:block; margin-bottom:8px; font-size:13.5px; font-weight:700}
+  .fb.good b.tag{color:var(--ok)}
+  .fb.bad b.tag{color:var(--bad)}
+  .ex-es{display:block; color:var(--es); margin-top:8px; padding-top:8px; border-top:1px dashed var(--line2)}
+
+  .nav{display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:20px;
+       border-top:1px solid var(--line); flex-wrap:wrap}
+  .nav > div{display:flex; gap:10px; flex-wrap:wrap}
+
+  /* ---------- resultados ---------- */
+  .score-box{text-align:center; padding:6px 0 4px}
+  .ring{
+    width:168px; height:168px; border-radius:50%; margin:10px auto 18px;
+    display:grid; place-items:center; position:relative;
+    background:conic-gradient(var(--accent) 0deg, #eceff3 0deg);
+  }
+  .ring::after{content:""; position:absolute; inset:13px; background:#fff; border-radius:50%}
+  .ring .inner{position:relative; z-index:1}
+  .ring .pct{font-size:34px; font-weight:750; color:var(--txt); letter-spacing:-1.2px; line-height:1.1}
+  .ring .lbl{font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:1px}
+  .verdict{font-size:17px; font-weight:700; letter-spacing:-.2px}
+  .verdict.pass{color:var(--ok)}
+  .verdict.fail{color:var(--bad)}
+
+  .review{margin-top:28px; display:grid; gap:14px}
+  .rev-card{background:#fff; border:1px solid var(--line); border-radius:13px; padding:20px 22px}
+  .rev-card.ok{border-left:3px solid var(--ok)}
+  .rev-card.no{border-left:3px solid var(--bad)}
+  .badge{
+    display:inline-block; font-size:10.5px; font-weight:700; padding:4px 10px;
+    border-radius:99px; margin-bottom:10px; text-transform:uppercase; letter-spacing:.6px;
+  }
+  .badge.ok{background:var(--ok-soft); color:var(--ok); border:1px solid #a5e0b8}
+  .badge.no{background:var(--bad-soft); color:var(--bad); border:1px solid #f3bcbc}
+  .rev-q{font-size:15.5px; font-weight:650; color:var(--txt); line-height:1.55; margin-bottom:12px}
+  .rev-q .t-en{white-space:pre-line}
+  .rev-q .t-es{
+    white-space:pre-line; display:block; color:var(--es); font-weight:500; font-size:14.3px;
+    margin-top:8px; padding-top:8px; border-top:1px solid var(--line);
+  }
+  .rev-ans{font-size:13.8px; margin:8px 0; line-height:1.6}
+  .rev-ans .lab{
+    display:block; color:var(--muted); font-size:10.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:.7px; margin-bottom:2px;
+  }
+  .rev-ans .v.ok{color:var(--ok); font-weight:600}
+  .rev-ans .v.no{color:var(--bad); font-weight:600}
+  .rev-exp{
+    margin-top:14px; font-size:13.2px; color:var(--body); background:var(--soft);
+    border:1px solid var(--line); border-radius:10px; padding:13px 15px; line-height:1.65;
+    white-space:pre-line;
+  }
+  .rev-exp b{color:var(--txt)}
+  .rev-exp .ex-es{white-space:pre-line; border-top:1px solid var(--line2); margin-top:10px; padding-top:10px}
+
+  .exhibit{max-width:100%; border:1px solid var(--line); border-radius:10px; margin:14px 0 6px; background:#fff}
+  .hidden{display:none!important}
+
+  footer{color:var(--muted); font-size:12px; text-align:center; padding:22px 20px; border-top:1px solid var(--line); margin-top:10px}
+  footer a{color:var(--accent); text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  @media (max-width:640px){
+    .card{padding:24px 18px; border-radius:14px}
+    .wrap{padding:22px 14px 50px}
+    header{padding:12px 16px}
+    .head-meta{display:none}
+    h2{font-size:20px}
+    .qtext{font-size:16.5px}
+    .langopts{flex-direction:column}
+    .stat{min-width:33%; padding:12px 6px}
+    .nav{flex-direction:column-reverse}
+    .nav > div{width:100%}
+    .nav .btn{flex:1}
+    .match-wrap{column-gap:44px}
+    .m-term,.m-desc{padding:10px 11px; font-size:13.4px}
+    .m-desc{font-size:12.9px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <span class="logo">EH</span>
+    <div>
+      <h1>Examen Final · Ethical Hacker</h1>
+      <div class="sub">Course Final Exam (Self-Paced) · 50 preguntas EN / ES</div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <div class="head-meta">Práctica con retroalimentación</div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ INICIO ============ -->
+  <section id="inicio" class="card">
+    <div class="eyebrow">Examen de práctica</div>
+    <h2>Course Final Exam — Hacker Ético</h2>
+    <p class="lead">
+      Las <b>50 preguntas</b> del examen final del curso, con el <b>texto original en inglés</b>
+      y su <b>traducción al español</b>: enunciados, opciones, ejercicios de relación y
+      explicaciones. Cada intento presenta las preguntas y las opciones en <b>orden aleatorio</b>.
+      Al terminar recibirás tu <b>puntaje</b>, el estado de <b>aprobado o reprobado</b> y una
+      <b>retroalimentación detallada</b> con la respuesta correcta y su explicación.
+    </p>
+
+    <div class="field-label">Idioma de las preguntas / Language</div>
+    <div class="langopts" id="langOpts">
+      <div class="langopt" data-lang="en">English<small>Solo el texto original</small></div>
+      <div class="langopt" data-lang="es">Español<small>Solo la traducción</small></div>
+      <div class="langopt on" data-lang="both">EN + ES<small>Los dos idiomas a la vez</small></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>50</b><span>Preguntas</span></div>
+      <div class="stat"><b>70%</b><span>Mínimo para aprobar</span></div>
+      <div class="stat"><b>∞</b><span>Sin límite de tiempo</span></div>
+    </div>
+
+    <div class="field-label">Opciones del examen</div>
+    <div class="opts">
+      <div class="opt-row">
+        <input type="checkbox" id="optShuffleQ" checked>
+        <label for="optShuffleQ">Mezclar el <b>orden de las preguntas</b></label>
+      </div>
+      <div class="opt-row">
+        <input type="checkbox" id="optShuffleO" checked>
+        <label for="optShuffleO">Mezclar el <b>orden de las opciones</b> en cada pregunta</label>
+      </div>
+      <div class="opt-row">
+        <input type="checkbox" id="optImmediate">
+        <label for="optImmediate">Retroalimentación <b>inmediata</b> al responder cada pregunta</label>
+      </div>
+      <div class="opt-row">
+        <input type="checkbox" id="optTimer" checked>
+        <label for="optTimer">Mostrar <b>cronómetro</b> durante el examen</label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="btnStart">Iniciar examen →</button>
+      <span class="note">50 preguntas · aprobado desde 70% · nuevo orden en cada intento</span>
+    </div>
+    <p class="warn">Nota: algunas preguntas incluyen imágenes (exhibits) que se cargan desde la página de origen.</p>
+  </section>
+
+  <!-- ============ EXAMEN ============ -->
+  <section id="examen" class="card hidden">
+    <div class="meta">
+      <span>Pregunta <span class="qnum" id="qNum">1</span> de <span id="qTotal">50</span></span>
+      <span id="timer" class="hidden">⏱ 00:00</span>
+      <span id="answered">Respondidas: 0/50</span>
+    </div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="meta">
+      <span id="typeTag"></span>
+      <span id="scoreLive"></span>
+    </div>
+
+    <div class="qtext" id="qText"></div>
+    <div class="hint" id="qHint"></div>
+    <div id="qImg"></div>
+    <div class="choices" id="choices"></div>
+    <div class="fb hidden" id="fb"></div>
+
+    <div class="nav">
+      <button class="btn ghost" id="btnPrev">← Anterior</button>
+      <div>
+        <button class="btn ghost" id="btnCheck" hidden>Comprobar</button>
+        <button class="btn" id="btnNext">Siguiente →</button>
+        <button class="btn ok hidden" id="btnFinish">Terminar y ver resultados</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTADOS ============ -->
+  <section id="resultados" class="card hidden">
+    <div class="score-box">
+      <div class="eyebrow">Resultado del intento</div>
+      <div class="ring" id="ring">
+        <div class="inner">
+          <div class="pct" id="pct">0%</div>
+          <div class="lbl">Puntaje</div>
+        </div>
+      </div>
+      <div class="verdict" id="verdict"></div>
+      <p class="lead" id="resumen" style="margin-top:8px"></p>
+      <div class="stats">
+        <div class="stat"><b id="rCorrect">0</b><span>Correctas</span></div>
+        <div class="stat"><b id="rWrong">0</b><span>Incorrectas</span></div>
+        <div class="stat"><b id="rTime">00:00</b><span>Tiempo</span></div>
+      </div>
+      <div class="actions" style="justify-content:center">
+        <button class="btn" id="btnRetry">Nuevo intento</button>
+        <button class="btn ghost" id="btnHome">Menú principal</button>
+        <button class="btn ghost" id="btnToggleReview">Ver retroalimentación</button>
+      </div>
+    </div>
+
+    <div class="review hidden" id="review"></div>
+  </section>
+
+</div>
+
+<footer>
+  Contenido textual de <a href="https://itexamanswers.net/ethical-hacker-course-final-exam-answers-self-paced.html" target="_blank" rel="noopener">ITExamAnswers.net — Ethical Hacker: Course Final Exam Answers (Self-Paced)</a> · EN original + ES traducción
+</footer>
+
+<script>
+/* =========================================================
+   BASE DE PREGUNTAS (50)
+   q / o / e / match  = texto EXACTO en inglés de la página
+   qs / os / es / ms  = traducción al español
+   a = índices de respuesta correcta en el arreglo o[]
+   ========================================================= */
+const P = [
+{q:"Which are two best practices used to secure APIs? (Choose two.)",
+ qs:"¿Cuáles son dos mejores prácticas utilizadas para proteger las API? (Elige dos.)",
+ o:["use reputable and standard libraries to create the APIs",
+    "make internal API documentation mandatory",
+    "discussing company API development (or any other application development) on public forums",
+    "secure API services to provide HTTP endpoints only",
+    "keep API implementation and API security into one tier allowing the API developer to work on both facets simultaneously"],
+ os:["Utilice bibliotecas estándar y de buena reputación para crear las API",
+     "Hacer obligatoria la documentación interna de la API",
+     "Discutir el desarrollo de API de la empresa (o cualquier otro desarrollo de aplicaciones) en foros públicos",
+     "Servicios API seguros para proporcionar solo puntos finales HTTP",
+     "Mantenga la implementación de la API y la seguridad de la API en un solo nivel, lo que permite al desarrollador de la API trabajar en ambas facetas simultáneamente"],
+ a:[0,1],
+ e:`The following are several general best practices and recommendations for securing APIs:
+- Secure API services to provide HTTPS endpoints with only a strong version of TLS.
+- Validate parameters in the application and sanitize incoming data from API clients.
+- Explicitly scan for common attack signatures; injection attacks often betray themselves by following common patterns.
+- Use strong authentication and authorization standards.
+- Use reputable and standard libraries to create the APIs.
+- Segment API implementation and API security into distinct tiers; doing so frees up the API developer to focus completely on the application domain.
+- Identify what data should be publicly available and what information is sensitive.
+- If possible, have a security expert do the API code verification.
+- Make internal API documentation mandatory.
+- Avoid discussing company API development (or any other application development) on a public forum.`,
+ es:`Las siguientes son varias buenas prácticas y recomendaciones generales para proteger las API:
+- Asegurar que los servicios de API proporcionen endpoints HTTPS con solo una versión fuerte de TLS.
+- Validar los parámetros en la aplicación y sanear los datos entrantes de los clientes de la API.
+- Escanear explícitamente firmas de ataque comunes; los ataques de inyección suelen delatarse siguiendo patrones comunes.
+- Usar estándares fuertes de autenticación y autorización.
+- Usar bibliotecas reputadas y estándar para crear las API.
+- Separar la implementación de la API de su seguridad en niveles distintos; esto libera al desarrollador de API para que se centre por completo en el dominio de la aplicación.
+- Identificar qué datos deben estar disponibles públicamente y qué información es sensible.
+- Si es posible, que un experto en seguridad verifique el código de la API.
+- Hacer obligatoria la documentación interna de la API.
+- Evitar comentar el desarrollo de API de la empresa (o de cualquier otra aplicación) en un foro público.`},
+
+{q:"Which type of threat actors use cybercrime attacks to promote what they believe in?",
+ qs:"¿Qué tipo de actores de amenazas utilizan ataques de delitos cibernéticos para promover lo que creen?",
+ o:["state-sponsored","hacktivists","organized crime","insider threats"],
+ os:["patrocinado por el estado",
+     "hacktivistas",
+     "crimen organizado",
+     "amenazas internas"],
+ a:[1],
+ e:"Hacktivists are types of threat actors not motivated by money. Hacktivists are looking to make a point or to promote what they believe, using cybercrime as a method of attack. These types of attacks are often carried out by stealing sensitive data and then revealing it to the public to embarrass or financially affect a target.",
+ es:"Los hacktivistas son tipos de actores de amenaza que no están motivados por el dinero. Buscan hacer llegar un mensaje o promover lo que creen, usando el ciberdelito como método de ataque. Este tipo de ataques suele llevarse a cabo robando datos sensibles y revelándolos al público para avergonzar o afectar económicamente a un objetivo."},
+
+{q:"A company conducted a penetration test 6 months ago. However, they have acquired new firewalls and servers to strengthen the network and increase capacity. Why would an administrator request a new penetration test?",
+ qs:"Una empresa realizó una prueba de penetración hace 6 meses. Sin embargo, han adquirido nuevos firewalls y servidores para fortalecer la red y aumentar la capacidad. ¿Por qué un administrador solicitaría una nueva prueba de penetración?",
+ o:["The attack surface has changed with the new equipment added.",
+    "The servers require independent performance evaluation.",
+    "The core data has been moved to the cloud infrastructure.",
+    "New cloud-based applications have been implemented."],
+ os:["La superficie de ataque ha cambiado con el nuevo equipo añadido.",
+     "Los servidores requieren una evaluación de rendimiento independiente.",
+     "Los datos principales se han trasladado a la infraestructura de la nube.",
+     "Se han implementado nuevas aplicaciones basadas en la nube."],
+ a:[0],
+ e:"Implementing a firewall, an IPS, anti-malware, a VPN, a web application firewall (WAF), and other modern security defenses is not enough. The validity of these defensive techniques needs to be tested regularly. As networks and systems change, the attack surface can vary as well, and when it does, the reevaluation of the security posture must be conducted by way of a penetration test.",
+ es:"Implantar una cortafuegos, un IPS, un antimalware, una VPN, un cortafuegos de aplicaciones web (WAF) y otras defensas de seguridad modernas no es suficiente. La validez de estas técnicas defensivas necesita probarse regularmente. A medida que cambian las redes y los sistemas, también puede variar la superficie de ataque y, cuando ello ocurre, la reevaluación de la postura de seguridad debe realizarse mediante una prueba de penetración."},
+
+{q:"A network administrator performs a penetration test for a company that sells computer parts through an online storefront. The first step is to discover who owns the domain name that the company is using. Which penetration testing tool can be used to do this?",
+ qs:"Un administrador de red realiza una prueba de penetración para una empresa que vende piezas de computadora a través de una tienda en línea. El primer paso es descubrir quién es el propietario del nombre de dominio que utiliza la empresa. ¿Qué herramienta de prueba de penetración se puede utilizar para hacer esto?",
+ o:["h8mail","Maltego","WHOIS","Exif"],
+ os:["h8mail",
+     "Maltego",
+     "WHOIS",
+     "Exif"],
+ a:[2],
+ e:"The whois command can gather information about who owns a particular domain from public records.",
+ es:"El comando whois puede recopilar información sobre quién es propietario de un dominio concreto a partir de registros públicos."},
+
+{q:"A penetration tester wants to quickly discover all the live hosts on the 192.168.0.0/24 network. Which command can do the ping sweep using the nmap tool?",
+ qs:"Un probador de penetración quiere descubrir rápidamente todos los hosts en vivo en la red 192.168.0.0/24. ¿Qué comando puede realizar el barrido de ping usando la herramienta nmap?",
+ o:["nmap 192.168.1.0/24 -open",
+    "nmap -sP 192.168.0.0/24",
+    "nmap -sV 192.168.0.255",
+    "nmap -sn 192.168.0.0/24",
+    "nmap -p 1-65535 localhost"],
+ os:["nmap 192.168.1.0/24 -abierto",
+     "nmap -sP 192.168.0.0/24",
+     "nmap -sV 192.168.0.255",
+     "nmap -sn 192.168.0.0/24",
+     "nmap -p 1-65535 host local"],
+ a:[3],
+ e:"The command nmap -sn 192.168.0.0/24 is used to do a ping sweep of the 192.168.0.0/24 network for active hosts. This basic host discovery scan can be performed to determine what devices on a network are live. Such a scan for host discovery of an entire subnet is sometimes called a ping sweep.",
+ es:"El comando nmap -sn 192.168.0.0/24 se usa para hacer un barrido de ping de la red 192.168.0.0/24 buscando hosts activos. Este escaneo básico de descubrimiento de hosts puede realizarse para determinar qué dispositivos de una red están encendidos. Dicho escaneo de descubrimiento de hosts de una subred completa a veces se llama ping sweep."},
+
+{q:"A penetration tester runs the command nmap -sF -p 80 192.168.1.1 against a Windows host and receives a response RST packet. What conclusion can be drawn on the status of port 80?",
+ qs:"Un probador de penetración ejecuta el comando nmap -sF -p 80 192.168.1.1 contra un host de Windows y recibe un paquete RST de respuesta. ¿Qué conclusión se puede sacar sobre el estado del puerto 80?",
+ o:["undetermined as this is a default response on a Windows system",
+    "port 80 is open",
+    "port 80 is closed",
+    "port 80 is open/filtered"],
+ os:["indeterminado ya que esta es una respuesta predeterminada en un sistema Windows",
+     "El puerto 80 está abierto",
+     "El puerto 80 está cerrado",
+     "El puerto 80 está abierto/filtrado"],
+ a:[0],
+ e:"A TCP FIN scan is not useful when scanning Windows-based systems, as they respond with RST packets, regardless of the port state. The normal implication of an RST message would indicate a closed port. Since this is a Windows-based system, it will always respond with an RST message regardless of the port state.",
+ es:"Un escaneo FIN de TCP no es útil al escanear sistemas Windows, ya que responden con paquetes RST independientemente del estado del puerto. La implicación normal de un mensaje RST indicaría un puerto cerrado. Como se trata de un sistema Windows, siempre responderá con un mensaje RST independientemente del estado del puerto."},
+
+{q:"Which common tool is used by penetration testers to craft packets?",
+ qs:"¿Qué herramienta común utilizan los probadores de penetración para crear paquetes?",
+ o:["h8mail","pip3","nmap","Recon-ng","scapy"],
+ os:["h8mail",
+     "pip3",
+     "nmap",
+     "Recon-ng",
+     "escápula"],
+ a:[4],
+ e:"Scapy is a very comprehensive Python-based framework or ecosystem for packet generation. Scapy must be run with root permissions to be able to modify packets.",
+ es:"Scapy es un framework o ecosistema muy completo para la generación de paquetes basado en Python. Scapy debe ejecutarse con permisos root para poder modificar paquetes."},
+
+{q:"Why should a tester use query throttling techniques when running an authorized penetration test on a live network?",
+ qs:"¿Por qué un evaluador debería utilizar técnicas de limitación de consultas al ejecutar una prueba de penetración autorizada en una red en vivo?",
+ o:["to limit bandwidth on resource heavy applications",
+    "to reduce the number of attack threads that are being sent to the target at the same time",
+    "to limit bandwidth on real-time antivirus and malware scanners",
+    "to create a larger attack surface on the target"],
+ os:["limitar el ancho de banda en aplicaciones con muchos recursos",
+     "para reducir la cantidad de hilos de ataque que se envían al objetivo al mismo tiempo",
+     "Limitar el ancho de banda en los escáneres antivirus y de malware en tiempo real",
+     "para crear una superficie de ataque más grande en el objetivo"],
+ a:[1],
+ e:"To work around the issue of bandwidth limitations and vulnerability scanning, slowing down the traffic created by the scanner can help. This is often referred to as query throttling, and it can typically be achieved by modifying the options of the scanning policy. One way to do this is to reduce the number of attack threads being sent to the target simultaneously.",
+ es:"Para sortear el problema de las limitaciones de ancho de banda y el escaneo de vulnerabilidades, ralentizar el tráfico creado por el escaner puede ayudar. Esto se conoce comúnmente como query throttling y normalmente se logra modificando las opciones de la política de escaneo. Una forma de hacerlo es reducir el número de hilos de ataque que se envían al objetivo simultáneamente."},
+
+{q:"Why would an organization hire a red team?",
+ qs:"¿Por qué una organización contrataría un equipo rojo?",
+ o:["to install equipment to protect against physical intrusion",
+    "to play the role of a threat actor by exposing vulnerabilities regarding technology",
+    "to defend the organization against cybersecurity threats",
+    "to evaluate the work of the security team of the organization"],
+ os:["Instalar equipos para proteger contra intrusiones físicas",
+     "desempeñar el papel de actor de amenazas exponiendo vulnerabilidades relacionadas con la tecnología",
+     "defender a la organización contra las amenazas a la ciberseguridad",
+     "Evaluar el trabajo del equipo de seguridad de la organización"],
+ a:[1],
+ e:"A read team is a group of cybersecurity experts and penetration testers hired by an organization to mimic a real threat actor by exposing vulnerabilities and risks regarding technology, people, and physical security.",
+ es:"Un red team es un grupo de expertos en ciberseguridad y probadores de penetración contratados por una organización para imitar a un actor de amenaza real, exponiendo vulnerabilidades y riesgos relacionados con la tecnología, las personas y la seguridad física."},
+
+{q:"Match the healthcare sector term to the respective description.\n\nPlace the options in the following order:",
+ qs:"Relacione el término del sector de la salud con la descripción respectiva.",
+ match:[
+  {t:"Healthcare provider", d:"a person or an organization that provides patient or medical services"},
+  {t:"Health plan", d:"a government program that pays for healthcare"},
+  {t:"Business associates", d:"a person or organization that performs certain functions involving the use of PHI on behalf of, or provides services to, a covered entity"},
+  {t:"Healthcare clearinghouse", d:"an entity that processes nonstandard health information it receives from another entity into a standard format"}],
+ ms:[
+  {t:"Proveedor de atención médica", d:"una persona u organización que brinda servicios médicos o para pacientes"},
+  {t:"Plan de salud", d:"Un programa gubernamental que paga la atención médica"},
+  {t:"Asociados comerciales", d:"una persona u organización que realiza ciertas funciones que implican el uso de PHI en nombre de una entidad cubierta o proporciona servicios a ella"},
+  {t:"Centro de intercambio de información sanitaria", d:"una entidad que procesa información de salud no estándar que recibe de otra entidad en un formato estándar"}],
+ e:`Place the options in the following order:
+Healthcare provider | a person or an organization that provides patient or medical services
+Health plan | a government program that pays for healthcare
+Business associates | a person or organization that performs certain functions involving the use of PHI on behalf of, or provides services to, a covered entity
+Healthcare clearinghouse | an entity that processes nonstandard health information it receives from another entity into a standard format`,
+ es:`Coloca las opciones en el siguiente orden:
+Proveedor de atención médica | una persona u organización que brinda servicios médicos o para pacientes
+Plan de salud | Un programa gubernamental que paga la atención médica
+Asociados comerciales | una persona u organización que realiza ciertas funciones que implican el uso de PHI en nombre de una entidad cubierta o proporciona servicios a ella
+Centro de intercambio de información sanitaria | una entidad que procesa información de salud no estándar que recibe de otra entidad en un formato estándar`},
+
+{q:"Which two elements are typically on the front of a credit card? (Choose two.)",
+ qs:"¿Cuáles son los dos elementos que normalmente aparecen en el anverso de una tarjeta de crédito? (Elige dos.)",
+ o:["date of birth","embedded microchip","magnetic stripe","primary account number","card security code"],
+ os:["fecha de nacimiento",
+     "microchip integrado",
+     "banda magnética",
+     "număr de contabilă principală",
+     "código de seguridad de la tarjeta"],
+ a:[1,3],
+ e:"The typical elements on the front of a credit card are an embedded microchip, PAN (primary account number), expiration date, and cardholder name. The typical elements on the back of a credit card are magnetic stripe and CAV2/CID/CVC2/CVV2, abbreviations for card security codes for the different payment brands.",
+ es:"Los elementos típicos en el anverso de una tarjeta de crédito son un microchip incorporado, el PAN (número de cuenta principal), la fecha de caducidad y el nombre del titular. Los elementos típicos en el reverso son la banda magnética y CAV2/CID/CVC2/CVV2, abreviaturas de los códigos de seguridad de las tarjetas para las diferentes marcas de pago."},
+
+{q:"What can be used to document the testing timeline in a rules of engagement document?",
+ qs:"¿Qué se puede utilizar para documentar el cronograma de pruebas en un documento de reglas de participación?",
+ o:["OWASP ZAP","Gantt charts and work breakdown structures","Recon-ng","Burp Suite"],
+ os:["OWASP ZAP",
+     "Diagramas de Gantt y estructuras de desglose del trabajo",
+     "Recon-ng",
+     "Suite Burp"],
+ a:[1],
+ e:"Gantt charts and work breakdown structures (WBS) can be used to demonstrate and document the testing timeline, an element of a rules of engagement document. Burp Suite and OWASP ZAP are tools to intercept communications between a browser and a web server. Recon-ng is a tool for passive reconnaissance.",
+ es:"Los diagramas de Gantt y las estructuras de desglose de trabajo (WBS) pueden usarse para demostrar y documentar la cronología de las pruebas, un elemento del documento de reglas de compromiso. Burp Suite y OWASP ZAP son herramientas para interceptar comunicaciones entre un navegador y un servidor web. Recon-ng es una herramienta de reconocimiento pasivo."},
+
+{q:"A cybersecurity firm has been hired by an organization to perform penetration tests. The tests require a secure method of transferring data over a network. Which two protocols could be used to accomplish this task? (Choose two.)",
+ qs:"Una empresa de ciberseguridad ha sido contratada por una organización para realizar pruebas de penetración. Las pruebas requieren un método seguro para transferir datos a través de una red. ¿Qué dos protocolos podrían utilizarse para realizar esta tarea? (Elige dos.)",
+ o:["SFTP","PGP","SCP","S/MIME","HTTPS"],
+ os:["SFTP",
+     "PGP",
+     "SCP",
+     "S/MIME",
+     "HTTPS"],
+ a:[0,2],
+ e:"Protocols such as Secure Copy Protocol (SCP) or Secure File Transfer Protocol (SFTP) can be used by penetration testers to transfer files securely over the network. Pretty Good Privacy (PGP) keys or Secure/Multipurpose Internet Mail Extensions (S/MIME) keys can be used for encrypted email exchanges. Hypertext Transfer Protocol Secure (HTTPS) is the secure version of HTTP that provides secure communication between web browsers and web servers.",
+ es:"Protocolos como SCP (Secure Copy Protocol) o SFTP (Secure File Transfer Protocol) pueden usarse por los probadores de penetración para transferir archivos de forma segura por la red. Las claves PGP (Pretty Good Privacy) o S/MIME (Secure/Multipurpose Internet Mail Extensions) pueden usarse para intercambios de correo cifrados. HTTPS (Hypertext Transfer Protocol Secure) es la versión segura de HTTP que proporciona comunicación segura entre navegadores web y servidores web."},
+{q:"Match penetration testing methodology and standard with the respective description.\n\nPlace the options in the following order:",
+ qs:"Relacione la metodología y el estándar de las pruebas de penetración con la descripción respectiva.",
+ match:[
+  {t:"OWASP WSTG", d:"this is a compilation of high-level phases of web application security testing and digs deeper into the testing methods used. This is primarily used by penetration testers from the web application security testing perspective."},
+  {t:"OSSTMM", d:"this is a peer-reviewed security testing methodology maintained by the Institute for Security and Open Methodologies (ISECOM). It is an open security research community providing original resources, tools, and certifications in the security field. It uses a document that lays out repeatable and consistent security testing."},
+  {t:"MITRE ATT&CK", d:"this is a resource for learning about the tactics of an adversary, techniques, and procedures (TTPs). This framework is a collection of different matrices of tactics, techniques, and sub-techniques used by penetration testers for both offensive and defensive purposes."},
+  {t:"NIST", d:"this is a document created to provide organizations with guidelines on planning and conducting information security testing. It is considered an industry standard for penetration testing guidance and is called out in many other industry standards and documents."}],
+ ms:[
+  {t:"OWASP WSTG", d:"Esta es una compilación de fases de alto nivel de pruebas de seguridad de aplicaciones web y profundiza en los métodos de prueba utilizados. Esto lo utilizan principalmente los evaluadores de penetración desde la perspectiva de las pruebas de seguridad de aplicaciones web."},
+  {t:"OSSTMM", d:"Esta es una metodología de pruebas de seguridad revisada por pares mantenida por el Instituto de Seguridad y Metodologías Abiertas (ISECOM). Es una comunidad de investigación de seguridad abierta que proporciona recursos, herramientas y certificaciones originales en el campo de la seguridad. Utiliza un documento que establece pruebas de seguridad repetibles y consistentes."},
+  {t:"MITRE ATT&CK", d:"Este es un recurso para aprender sobre las tácticas, técnicas y procedimientos (TTP) de un adversario. Este marco es una colección de diferentes matrices de tácticas, técnicas y subtécnicas utilizadas por los probadores de penetración con fines tanto ofensivos como defensivos."},
+  {t:"NIST", d:"Este es un documento creado para proporcionar a las organizaciones pautas sobre la planificación y realización de pruebas de seguridad de la información. Se considera un estándar de la industria para la orientación sobre pruebas de penetración y se menciona en muchos otros estándares y documentos de la industria."}],
+ e:`Place the options in the following order:
+OWASP WSTG | this is a compilation of high-level phases of web application security testing and digs deeper into the testing methods used. This is primarily used by penetration testers from the web application security testing perspective.
+OSSTMM | this is a peer-reviewed security testing methodology maintained by the Institute for Security and Open Methodologies (ISECOM). It is an open security research community providing original resources, tools, and certifications in the security field. It uses a document that lays out repeatable and consistent security testing.
+MITRE ATT&CK | this is a resource for learning about the tactics of an adversary, techniques, and procedures (TTPs). This framework is a collection of different matrices of tactics, techniques, and sub-techniques used by penetration testers for both offensive and defensive purposes.
+NIST | this is a document created to provide organizations with guidelines on planning and conducting information security testing. It is considered an industry standard for penetration testing guidance and is called out in many other industry standards and documents.`,
+ es:`Coloca las opciones en el siguiente orden:
+OWASP WSTG | Esta es una compilación de fases de alto nivel de pruebas de seguridad de aplicaciones web y profundiza en los métodos de prueba utilizados. Esto lo utilizan principalmente los evaluadores de penetración desde la perspectiva de las pruebas de seguridad de aplicaciones web.
+OSSTMM | Esta es una metodología de pruebas de seguridad revisada por pares mantenida por el Instituto de Seguridad y Metodologías Abiertas (ISECOM). Es una comunidad de investigación de seguridad abierta que proporciona recursos, herramientas y certificaciones originales en el campo de la seguridad. Utiliza un documento que establece pruebas de seguridad repetibles y consistentes.
+MITRE ATT&CK | Este es un recurso para aprender sobre las tácticas, técnicas y procedimientos (TTP) de un adversario. Este marco es una colección de diferentes matrices de tácticas, técnicas y subtécnicas utilizadas por los probadores de penetración con fines tanto ofensivos como defensivos.
+NIST | Este es un documento creado para proporcionar a las organizaciones pautas sobre la planificación y realización de pruebas de seguridad de la información. Se considera un estándar de la industria para la orientación sobre pruebas de penetración y se menciona en muchos otros estándares y documentos de la industria.`},
+
+{q:"Which three practices are commonly adopted when setting up a penetration testing lab environment? (Choose three.)",
+ qs:"¿Cuáles son las tres prácticas que se adoptan comúnmente al configurar un entorno de laboratorio de pruebas de penetración? (Elige tres.)",
+ o:["use a honeypot for all tests run from the physical attack platforms",
+    "ensure that when something crashes, it can be determined how and why it happened",
+    "create the penetration testing environment using virtual machines and virtual switches",
+    "use an open environment to allow for free passage of attack packets to the target machines",
+    "create the penetration testing environment using physical equipment and switches in order to route the packets freely",
+    "use a closed environment for all testing purposes"],
+ os:["Utilice un honeypot para todas las pruebas realizadas desde las plataformas de ataque físico",
+     "asegúrese de que cuando algo falle, se pueda determinar cómo y por qué sucedió",
+     "Crear el entorno de pruebas de penetración utilizando máquinas virtuales y conmutadores virtuales",
+     "Utilice un entorno abierto para permitir el libre paso de paquetes de ataque a las máquinas de destino",
+     "Crear el entorno de prueba de penetración utilizando equipos físicos e interruptores para enrutar los paquetes libremente",
+     "Utilice un entorno cerrado para todos los fines de prueba"],
+ a:[1,2,5],
+ e:`The following is a list of requirements for a typical penetration testing environment:
+- Closed network: Ensure controlled access to and from the lab environment and restricted access to the Internet.
+- Virtualized computing environment: This allows for easy deployment and recovery of devices being tested.
+- Realistic environment: Using a staging testing environment should match the real environment as closely as possible.
+- Health monitoring: When something crashes, ensure the ability to determine how and why it happened.
+- Sufficient hardware resources: Ensure that a lack of resources does not cause false results.
+- Multiple operating systems: Test or validate a finding from another system. Testing from different operating systems is always good to see if the results differ.
+- Duplicate tools: A great way to validate a finding is to run the same test with a different tool to see if the results are the same.
+- Practice targets: Practice the penetration tools constantly. To do this, practice on targets that are known to be vulnerable.`,
+ es:`La siguiente es una lista de requisitos para un entorno típico de pruebas de penetración:
+- Red cerrada: garantizar un acceso controlado desde y hacia el entorno de laboratorio y acceso restringido a Internet.
+- Entorno informático virtualizado: permite el despliegue y la recuperación fáciles de los dispositivos en prueba.
+- Entorno realista: un entorno de pruebas de preparación (staging) debe parecerse lo máximo posible al entorno real.
+- Monitorización de salud: cuando algo se bloquee, garantizar la posibilidad de determinar cómo y por qué ocurrió.
+- Recursos de hardware suficientes: asegurar que la falta de recursos no provoque resultados falsos.
+- Múltiples sistemas operativos: probar o validar un hallazgo desde otro sistema. Probar desde distintos sistemas operativos siempre es bueno para ver si los resultados difieren.
+- Herramientas duplicadas: una gran forma de validar un hallazgo es ejecutar la misma prueba con una herramienta distinta para ver si los resultados coinciden.
+- Objetivos de práctica: practicar constantemente con las herramientas de penetración. Para ello, practique sobre objetivos que se sabe que son vulnerables.`},
+
+{q:"An organization wants to test its vulnerability to an employee with network privileges accessing the network maliciously. Which type of penetration test should be used to test this vulnerability?",
+ qs:"Una organización quiere probar su vulnerabilidad ante un empleado con privilegios de red que accede a la red de forma maliciosa. ¿Qué tipo de prueba de penetración se debe utilizar para probar esta vulnerabilidad?",
+ o:["white-box","black-box","blue-box","gray-box"],
+ os:["caja blanca",
+     "caja negra",
+     "blue-box",
+     "caja gris"],
+ a:[3],
+ e:`Gray-box penetration testing is when the test is run from within the internal network. Because most compromises start at the client and work their way throughout the network, a good approach would be a scope where the testers start inside the network and have access to a client machine. Then they could pivot throughout the network to determine the impact of a compromise. Gray-box testing is done in a partially known environment.
+In black-box penetration testing, the tester is typically provided only limited information. (Unknown-environment testing.)
+In white-box penetration testing, the tester starts with significant information about the organization and its infrastructure. (Totally known environment.)
+The blue-box penetration testing is a box containing equipment for field quality testing and screening, with visual and written instructions for the users. CYBRI developed its own penetration testing services technology, called Blue-Box, which helps businesses and experts stay on the same page when it comes to testing, security controls, and security services.`,
+ es:`La prueba de penetración de caja gris es aquella en la que la prueba se ejecuta desde dentro de la red interna. Como la mayoría de los compromisos comienzan en el cliente y se extienden por toda la red, un buen enfoque sería un alcance en el que los probadores comiencen dentro de la red y tengan acceso a una máquina cliente. Después podrían hacer pivotes por la red para determinar el impacto de un compromiso. La prueba de caja gris se realiza en un entorno parcialmente conocido.
+En la prueba de penetración de caja negra, al probador normalmente se le proporciona solo información limitada. (Prueba de entorno desconocido.)
+En la prueba de penetración de caja blanca, el probador comienza con información significativa sobre la organización y su infraestructura. (Entorno totalmente conocido.)
+La prueba de penetración de caja azul es una caja que contiene equipos para pruebas y control de calidad en campo, con instrucciones visuales y escritas para los usuarios. CYBRI desarrolló su propia tecnología de servicios de pruebas de penetración, llamada Blue-Box, que ayuda a empresas y expertos a estar de acuerdo en cuanto a las pruebas, los controles de seguridad y los servicios de seguridad.`},
+
+{q:"Refer to the exhibit. A penetration is being prepared to run the EternalBlue exploit using Metasploit against a target with an IP address of 10.0.0.1/8 from the source PC with an IP address of 10.0.0.111/8. What two commands must be entered before the exploit command can be run? (Choose two.)",
+ qs:"Consulte la exposición. Se está preparando una penetración para ejecutar el exploit EternalBlue usando Metasploit contra un objetivo con una dirección IP de 10.0.0.1/8 desde la PC de origen con una dirección IP de 10.0.0.111/8. ¿Qué dos comandos se deben ingresar antes de poder ejecutar el comando de explotación? (Elige dos.)",
+ o:["set LHOST 10.0.0.1",
+    "set TARGET 10.0.0.111",
+    "set LHOST 10.0.0.111",
+    "set RHOST 10.0.0.1",
+    "set RHOST 10.0.0.111",
+    "set TARGET 10.0.0.1"],
+ os:["establezca LHOST 10.0.0.1",
+     "establecer OBJETIVO 10.0.0.111",
+     "establezca LHOST 10.0.0.111",
+     "establezca RHOST 10.0.0.1",
+     "establezca RHOST 10.0.0.111",
+     "establecer OBJETIVO 10.0.0.1"],
+ a:[2,3],
+ e:`The following commands have to be entered to identify the local host and the remote host before the exploit command can be executed:
+msf exploit(windows/smb/ms17_010_eternalblue) > set RHOST 10.0.0.1
+msf exploit(windows/smb/ms17_010_eternalblue) > set LHOST 10.0.0.111
+msf exploit(ms17_010_eternalblue) > exploit`,
+ es:`Los siguientes comandos deben introducirse para identificar el host local y el host remoto antes de que se pueda ejecutar el comando exploit:
+msf exploit(windows/smb/ms17_010_eternalblue) > set RHOST 10.0.0.1
+msf exploit(windows/smb/ms17_010_eternalblue) > set LHOST 10.0.0.111
+msf exploit(ms17_010_eternalblue) > exploit`,
+ img:"https://itexamanswers.net/wp-content/uploads/2023/10/i414207v2n1_exploit.png"},
+
+{q:"A penetration tester runs the Nmap NSE script nmap --script smtp-open-relay.nse 10.0.0.1 command on a Kali Linux PC. What is the purpose of running this script?",
+ qs:"Un probador de penetración ejecuta el comando Nmap NSE script nmap --script smtp-open-relay.nse 10.0.0.1 en una PC Kali Linux. ¿Cuál es el propósito de ejecutar este script?",
+ o:["to check whether the smtp authentication is compromised on the target server",
+    "to check open relay configurations on the target server",
+    "to compromise any snmp community strings on the target PC",
+    "to compromise any open relays on the target server"],
+ os:["para comprobar si la autenticación SMTP está comprometida en el servidor de destino",
+     "para comprobar las configuraciones de relé abierto en el servidor de destino",
+     "para comprometer cualquier cadena de la comunidad snmp en la PC de destino",
+     "para comprometer cualquier relé abierto en el servidor de destino"],
+ a:[1],
+ e:"SMTP open relay is the term used for an email server that accepts and relays (that is, sends) emails from any user. The script nmap --script smtp-open-relay.nse 10.0.0.1 is an Nmap NSEscript to test for open relay configurations on the target server.",
+ es:"El relay abierto SMTP (SMTP open relay) es el término que se usa para un servidor de correo que acepta y reenvía (es decir, envía) correos de cualquier usuario. El script nmap --script smtp-open-relay.nse 10.0.0.1 es un script NSE de Nmap para probar las configuraciones de relay abierto en el servidor objetivo."},
+
+{q:"Refer to the exhibit. What is the penetration tester trying to achieve by running this exploit?",
+ qs:"Consulte la exposición. ¿Qué intenta lograr el probador de penetración ejecutando este exploit?",
+ o:["to enumerate FTP login on the target system",
+    "to check if the target system will allow FTP anonymous login",
+    "to compromise the target system for a remote session",
+    "to launch 220 packets of fragmented data to the FTP port on the target system"],
+ os:["para enumerar el inicio de sesión FTP en el sistema de destino",
+     "para comprobar si el sistema de destino permitirá el inicio de sesión anónimo mediante FTP",
+     "comprometer el sistema de destino para una sesión remota",
+     "lanzar 220 paquetes de datos fragmentados al puerto FTP del sistema de destino"],
+ a:[1],
+ e:`FTP Anonymous Login Verification can be done using the Metasploit script command:
+use auxiliary/scanner/ftp/anonymous
+The output displays that the FTP server is configured for anonymous login.`,
+ es:`La verificación de acceso anónimo FTP puede realizarse con el comando de script de Metasploit:
+use auxiliary/scanner/ftp/anonymous
+La salida muestra que el servidor FTP está configurado para permitir el acceso anónimo.`,
+ img:"https://itexamanswers.net/wp-content/uploads/2023/10/i414214v2n1_exploit1.png"},
+
+{q:"A penetration tester deploys a rogue AP in the target wireless infrastructure. What is the first step that has to be taken to force wireless clients to connect to the rogue AP?",
+ qs:"Un probador de penetración implementa un AP no autorizado en la infraestructura inalámbrica de destino. ¿Cuál es el primer paso que se debe dar para obligar a los clientes inalámbricos a conectarse al AP fraudulento?",
+ o:["send out false DNS beacons",
+    "spoof the MAC address of the rogue AP",
+    "set the PSK key to match the clients",
+    "send de-authentication frames to the clients"],
+ os:["enviar balizas DNS falsas",
+     "falsificar la dirección MAC del AP no autorizado",
+     "configure la clave PSK para que coincida con los clientes",
+     "enviar marcos de desautenticación a los clientes"],
+ a:[3],
+ e:"An attacker can cause legitimate wireless clients to deauthenticate from legitimate wireless APs or wireless routers to try to make those clients connect to the rogue AP by reassociating.",
+ es:"Un atacante puede hacer que los clientes inalámbricos legítimos se desautentiquen de los AP/routers inalámbricos legítimos para intentar que esos clientes se conecten al AP falso reasociándose."},
+
+{q:"A cybersecurity student is learning about the Social-Engineer Toolkit (SET), and the student has discovered that this tool can be used to launch various social engineering attacks. Which two social engineering attacks can be launched using SET?",
+ qs:"Un estudiante de ciberseguridad está aprendiendo sobre el Social-Engineer Toolkit (SET) y ha descubierto que esta herramienta se puede utilizar para lanzar varios ataques de ingeniería social. ¿Cuáles dos ataques de ingeniería social se pueden lanzar usando SET?",
+ o:["Create a payload and listener",
+    "Google phishing",
+    "Simple hijacker",
+    "Fake flash update",
+    "Infectious media generator"],
+ os:["Crear una carga útil y un oyente",
+     "Phishing en Google",
+     "Secuestrador simple",
+     "Actualización flash falsa",
+     "Generador de medios infecciosos"],
+ a:[0,4],
+ e:"The Social-Engineer Toolkit (SET) is a tool that can be used to launch numerous social engineering attacks, such as infectious media generators, and create a payload and listener. Google phishing, simple hijacker, and fake flash update are social engineering attacks performed by Browser Exploitation Framework (BeEF) tool. BeEF is a tool that can manipulate users by leveraging XSX vulnerabilities.",
+ es:"El Social-Engineer Toolkit (SET) es una herramienta que puede usarse para lanzar numerosos ataques de ingeniería social, como generadores de medios infecciosos, y crear un payload y un listener. El phishing de Google, el secuestrador simple (simple hijacker) y la falsa actualización de Flash son ataques de ingeniería social realizados por la herramienta Browser Exploitation Framework (BeEF). BeEF es una herramienta que puede manipular a los usuarios aprovechando vulnerabilidades XSX."},
+
+{q:"A threat actor spoofed the phone number of the director of HR and called the IT help desk with a login problem. The threat actor claims to be the director and wants the help desk to change the password. What method of influence is this cybercriminal using?",
+ qs:"Un actor de amenazas falsificó el número de teléfono del director de Recursos Humanos y llamó al servicio de asistencia informática con un problema de inicio de sesión. El actor de la amenaza afirma ser el director y quiere que el servicio de asistencia cambie la contraseña. ¿Qué método de influencia utiliza este ciberdelincuente?",
+ o:["scarcity","social proof","fear","authority"],
+ os:["escasez",
+     "prueba social",
+     "miedo",
+     "autoridad"],
+ a:[3],
+ e:"Social engineers use several motivation techniques/methods of influence. In this scenario, a social engineer explores the principle that a person tends to comply with people in positions of authority, such as doctors, lawyers, and experts in different fields. This is the authority method of influence.",
+ es:"Los ingenieros sociales usan varias técnicas de motivación/métodos de influencia. En este escenario, un ingeniero social explora el principio de que las personas tienden a obedecer a quienes ocupan posiciones de autoridad, como doctores, abogados y expertos de distintos campos. Este es el método de influencia de la autoridad."},
+
+{q:"Which statement correctly describes a type of physical social engineering attack?",
+ qs:"¿Qué afirmación describe correctamente un tipo de ataque físico de ingeniería social?",
+ o:["Dumpster phishing refers to a threat actor who scavenges for victims' private information in garbage and recycling containers.",
+    "Social engineering techniques, software, and hardware can perform badge cloning attacks.",
+    "Tailgating and piggybacking attacks can only be defeated through the use of control vestibules in conjunction with multifactor authentication.",
+    "Shoulder surfing attacks are performed only by a short distance between the threat actor and the victim."],
+ os:["El phishing en contenedores de basura se refiere a un actor de amenazas que busca información privada de las víctimas en contenedores de basura y reciclaje.",
+     "Las técnicas de ingeniería social, el software y el hardware pueden realizar ataques de clonación de insignias.",
+     "Los ataques de tailgating y piggybacking solo se pueden derrotar mediante el uso de vestíbulos de control junto con autenticación multifactor.",
+     "Los ataques de surf de hombros se realizan sólo a una corta distancia entre el actor de la amenaza y la víctima."],
+ a:[1],
+ e:`There are various types of physical attacks. Both piggybacking and tailgating can be defeated through the use of access control vestibules, and it is often used in conjunction with multifactor authentication. Turnstiles, double entry doors, and security guards can also eliminate piggybacking and tailgating. With dumpster diving, a person (threat actor) scavenges for victims' private information in garbage and recycling containers. In badge cloning attacks, specialized software, hardware, and social engineering techniques can be used to perform such attacks. With shoulder surfing, someone obtains information such as personally identifiable information, passwords, and other confidential data by looking not only over the shoulder of the victim. It is also possible to carry out this type of attack from far away using binoculars or even a telescope.`,
+ es:`Existen varios tipos de ataques físicos. Tanto el piggybacking como el tailgating pueden evitarse mediante vestíbulos de control de acceso, y a menudo se usan en combinación con autenticación multifactor. Los torniquetes, las puertas dobles de entrada y los guardias de seguridad también pueden eliminar el piggybacking y el tailgating. En el dumpster diving, una persona (actor de amenaza) busca información privada de las víctimas en contenedores de basura y reciclaje. En los ataques de clonación de credenciales pueden usarse software especializado, hardware y técnicas de ingeniería social. Con el shoulder surfing, alguien obtiene información como datos personales identificables, contraseñas y otros datos confidenciales mirando no solo por encima del hombro de la víctima. También es posible llevar a cabo este tipo de ataque a distancia usando binoculares o incluso un telescopio.`},
+
+{q:"What is a characteristic of a pharming attack?",
+ qs:"¿Cuál es una característica de un ataque de pharming?",
+ o:["a threat actor redirects a victim from a valid website to a malicious legitimate looking site",
+    "a type of attack in which a social engineer impersonates another person to have physical access to systems in an organization",
+    "a social engineering attack carried out in a phone conversation",
+    "a type of attack where the threat actor obtains confidential data of the victim using binoculars or even a telescope"],
+ os:["Un actor de amenazas redirige a una víctima desde un sitio web válido a un sitio malicioso de apariencia legítima",
+     "un tipo de ataque en el que un ingeniero social se hace pasar por otra persona para tener acceso físico a los sistemas de una organización",
+     "Un ataque de ingeniería social llevado a cabo en una conversación telefónica",
+     "un tipo de ataque en el que el actor de la amenaza obtiene datos confidenciales de la víctima utilizando binoculares o incluso un telescopio"],
+ a:[0],
+ e:"Pharming is an impersonation attack in which a threat actor redirects a victim from a valid website or resource to a malicious one that could be made to appear as a valid site to the user. From there, an attempt is made to extract confidential information from the user or install malware on the system of the victim.",
+ es:"El pharming es un ataque de suplantación en el que un actor de amenaza redirige a una víctima desde un sitio web o recurso válido hacia uno malicioso que puede hacerse pasar por un sitio válido para el usuario. Desde allí se intenta extraer información confidencial del usuario o instalar malware en el sistema de la víctima."},
+
+{q:"What kind of social engineering attack can be prevented by developing policies such as updating anti-malware applications regularly and using secure virtual browsers with little connectivity to the rest of the system and the rest of the network?",
+ qs:"¿Qué tipo de ataque de ingeniería social se puede prevenir desarrollando políticas como la actualización periódica de aplicaciones antimalware y el uso de navegadores virtuales seguros y con poca conectividad con el resto del sistema y el resto de la red?",
+ o:["tailgating","watering hole","vishing","SMS phishing"],
+ os:["tailgating",
+     "abrevadero",
+     "vishing",
+     "Phishing por SMS"],
+ a:[1],
+ e:"A watering hole attack is a targeted attack that occurs when an attacker profiles websites that the intended victim accesses. The attacker then scans those websites for possible vulnerabilities. Organizations should therefore develop policies to prevent these attacks. Such a policy requires updating anti-malware applications regularly and using secure virtual browsers with little connectivity to the rest of the system and the rest of the network.",
+ es:"El ataque watering hole es un ataque dirigido que se produce cuando un atacante perfila los sitios web que visita la víctima potencial. Después, el atacante escanea esos sitios web en busca de posibles vulnerabilidades. Por ello, las organizaciones deben desarrollar políticas para prevenir estos ataques. Una política así requiere actualizar regularmente las aplicaciones antimalware y usar navegadores virtuales seguros con poca conectividad con el resto del sistema y con el resto de la red."},
+
+{q:"An attacker enters the string ‘John’ or ‘1=1’ on a web form that is connected to a back-end SQL server causing the server to display all records in the database table. Which type of SQL injection attack was used in this scenario?",
+ qs:"Un atacante ingresa la cadena ‘John’ o ‘1=1’ en un formulario web que está conectado a un servidor SQL back-end, lo que hace que el servidor muestre todos los registros en la tabla de la base de datos. ¿Qué tipo de ataque de inyección SQL se utilizó en este escenario?",
+ o:["error-based SQL injection","inferential SQL injection","boolean SQL injection","out-of-band SQL injection"],
+ os:["Inyección SQL basada en errores",
+     "inyección SQL inferencial",
+     "inyección SQL booleana",
+     "Inyección SQL fuera de banda"],
+ a:[2],
+ e:"Since the string ‘1=1’ is always true, the search string serves as a Boolean value of TRUE, causing the database system to display all records.",
+ es:"Dado que la cadena ‘1=1’ es siempre verdadera, la cadena de búsqueda actúa como un valor booleano TRUE, lo que hace que el sistema de base de datos muestre todos los registros."},
+
+{q:"What are two examples of immutable queries that should be used as mitigation for SQL injection vulnerabilities? (Choose two.)",
+ qs:"¿Cuáles son dos ejemplos de consultas inmutables que deberían utilizarse como mitigación de vulnerabilidades de inyección SQL? (Elige dos.)",
+ o:["static queries","time-delay queries","parameterized queries","in-band queries","stacked queries"],
+ os:["consultas estáticas",
+     "consultas de retardo de tiempo",
+     "consultas parametrizadas",
+     "consultas en banda",
+     "consultas apiladas"],
+ a:[0,2],
+ e:`The best mitigation for SQL injection vulnerabilities is to use immutable queries, including:
+- Static queries
+- Parameterized queries
+- Stored procedures (if they do not generate dynamic SQL)`,
+ es:`La mejor mitigación para las vulnerabilidades de inyección SQL es usar consultas inmutables, entre ellas:
+- Consultas estáticas
+- Consultas parametrizadas
+- Procedimientos almacenados (si no generan SQL dinámico)`},
+
+{q:"An attacker enters the string 192.168.78.6;cat /etc/httpd/httpd.conf on a web application hosted on a Linux server. Which type of attack occurred?",
+ qs:"Un atacante ingresa la cadena 192.168.78.6;cat/etc/httpd/httpd.conf en una aplicación web alojada en un servidor Linux. ¿Qué tipo de ataque ocurrió?",
+ o:["session hijacking","redirect attack","SQL injection","command injection"],
+ os:["secuestro de sesión",
+     "redirigir ataque",
+     "Inyección SQL",
+     "inyección de comando"],
+ a:[3],
+ e:"A command injection is an attack in which an attacker tries to execute OS commands that the attacker is not supposed to be able to execute on a system. In this case, the attacker tries to view the web server (httpd) configuration information.",
+ es:"La inyección de comandos es un ataque en el que un atacante intenta ejecutar comandos del sistema operativo que no debería poder ejecutar en un sistema. En este caso, el atacante intenta ver la información de configuración del servidor web (httpd)."},
+
+{q:"Which two misconfigured cloud authentication methods could leverage a cloud asset? (Choose two.)",
+ qs:"¿Cuáles dos métodos de autenticación en la nube mal configurados podrían aprovechar un activo en la nube? (Elige dos.)",
+ o:["federated authentication",
+    "biometric authentication",
+    "identity and access management (IAM) implementations",
+    "Intelligent Platform Management Interface (IPMI)",
+    "local authentication"],
+ os:["autenticación federada",
+     "autenticación biométrica",
+     "Implementaciones de gestión de identidad y acceso (IAM)",
+     "Interfaz de gestión de plataforma inteligente (IPMI)",
+     "autenticación local"],
+ a:[0,2],
+ e:`Attackers can leverage misconfigured cloud assets in several ways, including the following:
+- Misconfigured identity and access management (IAM) implementations
+- Federation misconfigurations`,
+ es:`Los atacantes pueden aprovechar recursos en la nube mal configurados de varias maneras, entre ellas:
+- Implementaciones de gestión de identidad y acceso (IAM) mal configuradas
+- Errores de configuración en la federación de identidades`},
+
+{q:"Match the cloud attack to the description.\n\nPlace the options in the following order:",
+ qs:"Haga coincidir el ataque a la nube con la descripción.\n\nColoque las opciones en el siguiente orden:",
+ match:[
+  {t:"Credential Harvesting", d:"act of gathering and stealing valid usernames, passwords, tokens, PINs, and any other types of credentials through infrastructure breaches"},
+  {t:"Privilege Escalation", d:"act of exploiting a bug or design flaw in a software or firmware application to gain access to resources that normally would have been protected from an application or a user"},
+  {t:"Account Takeover", d:"when a threat actor gains access to a user or application account and uses it to then gain access to more accounts and information"}],
+ ms:[
+  {t:"Recolección de credenciales", d:"acto de recopilar y robar nombres de usuario, contraseñas, tokens, PIN y cualquier otro tipo de credenciales válidas mediante violaciones de infraestructura"},
+  {t:"Escalada de privilegios", d:"acto de explotar un error o falla de diseño en una aplicación de software o firmware para obtener acceso a recursos que normalmente habrían estado protegidos de una aplicación o un usuario"},
+  {t:"Adquisición de cuenta", d:"Cuando un actor de amenazas obtiene acceso a una cuenta de usuario o aplicación y la usa para luego obtener acceso a más cuentas e información"}],
+ e:`Place the options in the following order:
+Credential Harvesting | act of gathering and stealing valid usernames, passwords, tokens, PINs, and any other types of credentials through infrastructure breaches
+Privilege Escalation | act of exploiting a bug or design flaw in a software or firmware application to gain access to resources that normally would have been protected from an application or a user
+Account Takeover | when a threat actor gains access to a user or application account and uses it to then gain access to more accounts and information`,
+ es:`Coloca las opciones en el siguiente orden:
+Recolección de credenciales | acto de recopilar y robar nombres de usuario, contraseñas, tokens, PIN y cualquier otro tipo de credenciales válidas mediante violaciones de infraestructura
+Escalada de privilegios | acto de explotar un error o falla de diseño en una aplicación de software o firmware para obtener acceso a recursos que normalmente habrían estado protegidos de una aplicación o un usuario
+Adquisición de cuenta | Cuando un actor de amenazas obtiene acceso a una cuenta de usuario o aplicación y la usa para luego obtener acceso a más cuentas e información`},
+{q:"What is the purpose of using the smtp-user-enum -M VRFY -u snp -t 10.0.0.1 command in Kali Linux?",
+ qs:"¿Cuál es el propósito de utilizar el comando smtp-user-enum -M VRFY -u snp -t 10.0.0.1 en Kali Linux?",
+ o:["to initiate an SMTP conversation with an email server 10.0.0.1",
+    "to start a Transport Layer Security (TLS) connection to an email server 10.0.0.1",
+    "to verify if a certain user exists on the SMTP server 10.0.0.1",
+    "to compromise SMTP open relay server 10.0.0.1"],
+ os:["para iniciar una conversación SMTP con un servidor de correo electrónico 10.0.0.1",
+     "para iniciar una conexión de seguridad de la capa de transporte (TLS) a un servidor de correo electrónico 10.0.0.1",
+     "para verificar si existe un determinado usuario en el servidor SMTP 10.0.0.1",
+     "para comprometer el servidor de retransmisión abierta SMTP 10.0.0.1"],
+ a:[2],
+ e:"The smtp-user-enum -M VRFY -u snp -t 10.0.0.1 command is used to verify whether the user snp exists on the smtp server 10.0.0.1.",
+ es:"El comando smtp-user-enum -M VRFY -u snp -t 10.0.0.1 se usa para verificar si el usuario snp existe en el servidor SMTP 10.0.0.1."},
+
+{q:"Match the mobile device security testing tool to the description.\n\nPlace the options in the following order:",
+ qs:"Haga coincidir la herramienta de prueba de seguridad del dispositivo móvil con la descripción.\n\nColoque las opciones en el siguiente orden:",
+ match:[
+  {t:"Burp Suite", d:"this can test mobile applications and determine how they communicate with web services and APIs."},
+  {t:"Drozer", d:"this Android testing platform and framework provides access to numerous exploits that can be used to attack Android platforms."},
+  {t:"Needle", d:"this open-source framework is used to test the security of iOS applications."},
+  {t:"ApkX", d:"this tool enables you to decompile Android application package files."}],
+ ms:[
+  {t:"Suite Burp", d:"Esto puede probar aplicaciones móviles y determinar cómo se comunican con servicios web y API."},
+  {t:"Drozer", d:"Esta plataforma y marco de pruebas de Android proporciona acceso a numerosos exploits que pueden usarse para atacar plataformas Android."},
+  {t:"Aguja", d:"Este marco de código abierto se utiliza para probar la seguridad de las aplicaciones iOS."},
+  {t:"ApkX", d:"Esta herramienta le permite descompilar archivos de paquetes de aplicaciones de Android."}],
+ e:`Place the options in the following order:
+Burp Suite | this can test mobile applications and determine how they communicate with web services and APIs.
+Drozer | this Android testing platform and framework provides access to numerous exploits that can be used to attack Android platforms.
+Needle | this open-source framework is used to test the security of iOS applications.
+ApkX | this tool enables you to decompile Android application package files.`,
+ es:`Coloca las opciones en el siguiente orden:
+Suite Burp | Esto puede probar aplicaciones móviles y determinar cómo se comunican con servicios web y API.
+Drozer | Esta plataforma y marco de pruebas de Android proporciona acceso a numerosos exploits que pueden usarse para atacar plataformas Android.
+Aguja | Este marco de código abierto se utiliza para probar la seguridad de las aplicaciones iOS.
+ApkX | Esta herramienta le permite descompilar archivos de paquetes de aplicaciones de Android.`},
+
+{q:"Match the mobile device attack to the description.\n\nPlace the options in the following order:",
+ qs:"Haga coincidir el ataque al dispositivo móvil con la descripción.",
+ match:[
+  {t:"Sandbox analysis", d:"this can enable a threat actor to bypass the access control mechanisms implemented by Android, Apple iOS, and mobile app developers."},
+  {t:"Spamming", d:"this presents users with links to redirect them to malicious sites to steal sensitive information or install malware."},
+  {t:"Reverse engineering", d:"this is the process of analyzing a mobile app to extract information about the source code to understand the underlying architecture of a mobile application and potentially manipulate the mobile device."}],
+ ms:[
+  {t:"Análisis de Sandbox", d:"Esto puede permitir que un actor de amenazas eluda los mecanismos de control de acceso implementados por Android, Apple iOS y los desarrolladores de aplicaciones móviles."},
+  {t:"Spamming", d:"Esto presenta a los usuarios enlaces para redirigirlos a sitios maliciosos para robar información confidencial o instalar malware."},
+  {t:"Ingeniería inversa", d:"Este es el proceso de analizar una aplicación móvil para extraer información sobre el código fuente para comprender la arquitectura subyacente de una aplicación móvil y potencialmente manipular el dispositivo móvil."}],
+ e:`Place the options in the following order:
+Sandbox analysis | this can enable a threat actor to bypass the access control mechanisms implemented by Android, Apple iOS, and mobile app developers.
+Spamming | this presents users with links to redirect them to malicious sites to steal sensitive information or install malware.
+Reverse engineering | this is the process of analyzing a mobile app to extract information about the source code to understand the underlying architecture of a mobile application and potentially manipulate the mobile device.`,
+ es:`Coloca las opciones en el siguiente orden:
+Análisis de Sandbox | Esto puede permitir que un actor de amenazas eluda los mecanismos de control de acceso implementados por Android, Apple iOS y los desarrolladores de aplicaciones móviles.
+Spamming | Esto presenta a los usuarios enlaces para redirigirlos a sitios maliciosos para robar información confidencial o instalar malware.
+Ingeniería inversa | Este es el proceso de analizar una aplicación móvil para extraer información sobre el código fuente para comprender la arquitectura subyacente de una aplicación móvil y potencialmente manipular el dispositivo móvil.`},
+
+{q:"Which two Bluetooth Low Energy (BLE) statements are true? (Choose two.)",
+ qs:"¿Cuáles dos afirmaciones sobre Bluetooth Low Energy (BLE) son verdaderas? (Elige dos.)",
+ o:["All BLE-enabled devices implement cryptographic functions.",
+    "BLE involves a five-phase process to establish a connection.",
+    "Threat actors can listen to BLE advertisements and leverage misconfigurations.",
+    "BLE advertisement can be intercepted using specialized antennas and equipment.",
+    "BLE pairing is done by mobile apps."],
+ os:["Todos los dispositivos habilitados para BLE implementan funciones criptográficas.",
+     "BLE implica un proceso de cinco fases para establecer una conexión.",
+     "Los actores de amenazas pueden escuchar anuncios BLE y aprovechar configuraciones incorrectas.",
+     "La publicidad BLE se puede interceptar utilizando antenas y equipos especializados.",
+     "El emparejamiento BLE se realiza mediante aplicaciones móviles."],
+ a:[2,3],
+ e:"Threat actors can listen to BLE advertisements and leverage misconfigurations. You can analyze protocols such as BLE by using specialized antennas and equipment. Many devices that support BLE do not even implement BLE-layer encryption. BLE involves a three-phase process to establish a connection. BLE pairing is done at the operating system level.",
+ es:"Los actores de amenaza pueden escuchar los anuncios de BLE y aprovechar la mala configuración. Se pueden analizar protocolos como BLE usando antenas y equipos especializados. Muchos dispositivos que admiten BLE ni siquiera implementan cifrado en la capa BLE. BLE implica un proceso de tres fases para establecer una conexión. El emparejamiento de BLE se realiza a nivel del sistema operativo."},
+
+{q:"Match the insecure code practice to the description.\n\nPlace the options in the following order:",
+ qs:"Relacione la práctica del código inseguro con la descripción.\n\nColoque las opciones en el siguiente orden:",
+ match:[
+  {t:"Hard-coded credentials", d:"a catastrophic flaw that an attacker can leverage to completely compromise an application or the underlying system."},
+  {t:"Comments in source code", d:"developers include information in source code that could provide too much information and might be leveraged by an attacker."},
+  {t:"Lack of error handling and overly verbose error handling", d:"a type of weakness and security malpractice that can provide information to help an attacker perform additional attacks on the targeted system."},
+  {t:"Unprotected APIs", d:"many APIs lack adequate controls and are difficult to monitor. The breadth and complexity of APIs also make it difficult to automate effective security testing."}],
+ ms:[
+  {t:"Credenciales codificadas", d:"una falla catastrófica que un atacante puede aprovechar para comprometer completamente una aplicación o el sistema subyacente."},
+  {t:"Comentarios en el código fuente", d:"Los desarrolladores incluyen información en el código fuente que podría proporcionar demasiada información y podría ser aprovechada por un atacante."},
+  {t:"Falta de manejo de errores y manejo de errores demasiado detallado", d:"un tipo de debilidad y mala práctica de seguridad que puede proporcionar información para ayudar a un atacante a realizar ataques adicionales al sistema objetivo."},
+  {t:"API no protegidas", d:"Muchas API carecen de controles adecuados y son difíciles de monitorear. La amplitud y complejidad de las API también dificultan la automatización de pruebas de seguridad efectivas."}],
+ e:`Place the options in the following order:
+Hard-coded credentials | a catastrophic flaw that an attacker can leverage to completely compromise an application or the underlying system.
+Comments in source code | developers include information in source code that could provide too much information and might be leveraged by an attacker.
+Lack of error handling and overly verbose error handling | a type of weakness and security malpractice that can provide information to help an attacker perform additional attacks on the targeted system.
+Unprotected APIs | many APIs lack adequate controls and are difficult to monitor. The breadth and complexity of APIs also make it difficult to automate effective security testing.`,
+ es:`Coloca las opciones en el siguiente orden:
+Credenciales codificadas | una falla catastrófica que un atacante puede aprovechar para comprometer completamente una aplicación o el sistema subyacente.
+Comentarios en el código fuente | Los desarrolladores incluyen información en el código fuente que podría proporcionar demasiada información y podría ser aprovechada por un atacante.
+Falta de manejo de errores y manejo de errores demasiado detallado | un tipo de debilidad y mala práctica de seguridad que puede proporcionar información para ayudar a un atacante a realizar ataques adicionales al sistema objetivo.
+API no protegidas | Muchas API carecen de controles adecuados y son difíciles de monitorear. La amplitud y complejidad de las API también dificultan la automatización de pruebas de seguridad efectivas.`},
+
+{q:"Which C2 utility can be used to create multiple reverse shells?",
+ qs:"¿Qué utilidad C2 se puede utilizar para crear múltiples shells inversos?",
+ o:["WMImplant","TrevorC2","Socat","Wsc2"],
+ os:["Planta WMI",
+     "Trevor C2",
+     "Socat",
+     "Wsc2"],
+ a:[2],
+ e:`Many different techniques and utilities can be used to create a C2. Some examples are the following:
+
+- socat - a C2 utility that can be used to create multiple reverse shells
+- wsc2 - a Python-based C2 utility that uses WebSockets
+- WMImplant - a PowerShell-based tool that leverages WMI to create a C2 channel
+- TrevorC2 - a Python-based C2 utility`,
+ es:`Pueden usarse muchas técnicas y utilidades diferentes para crear un C2. Algunos ejemplos son los siguientes:
+
+- socat - una utilidad C2 que puede usarse para crear múltiples reverse shells
+- wsc2 - una utilidad C2 basada en Python que usa WebSockets
+- WMImplant - una herramienta basada en PowerShell que aprovecha WMI para crear un canal C2
+- TrevorC2 - una utilidad C2 basada en Python`},
+
+{q:"Refer to the exhibit. The attacking system has a listener (port open), and the victim initiates a connection back to the attacking system. Which two resources can create this type of malicious activity? (Choose two.)",
+ qs:"Consulte la exposición. El sistema atacante tiene un oyente (puerto abierto) y la víctima inicia una conexión de regreso al sistema atacante. ¿Cuáles dos recursos pueden crear este tipo de actividad maliciosa? (Elige dos.)",
+ o:["Empire","Sysinternals","BloodHound","Steghide","Netcat"],
+ os:["Imperio",
+     "Sistemas internos",
+     "Perro de sangre",
+     "Estela",
+     "Gato de red"],
+ a:[0,4],
+ e:"The malicious activity described in the scenario is a reverse shell. Many tools allow the creation of reverse shells from a compromised host. Some of the most popular ones are the Meterpreter module in Metasploit and Netcat. Empire is an open-source framework with PowerShell Windows and Python Linux agents that allows rapid deployment of post-exploitation modules, including keyloggers, bind shells, reverse shells, Mimikatz, and adaptable communication to evade detection.",
+ es:"La actividad maliciosa descrita en el escenario es un reverse shell. Muchas herramientas permiten crear reverse shells desde un host comprometido. Algunas de las más populares son el módulo Meterpreter de Metasploit y Netcat. Empire es un framework de código abierto con agentes PowerShell para Windows y Python para Linux que permite el despliegue rápido de módulos de post-explotación, como registradores de teclas (keyloggers), bind shells, reverse shells, Mimikatz y comunicación adaptable para evadir la detección.",
+ img:"https://itexamanswers.net/wp-content/uploads/2023/10/i414391v5n1_Image-Final-EH-Chapter8-414391.png"},
+
+{q:"Match the PowerSploit module/script to the respective description.\n\nPlace the options in the following order:",
+ qs:"Haga coincidir el módulo/script PowerSploit con la descripción respectiva.\n\nColoque las opciones en el siguiente orden:",
+ match:[
+  {t:"Invoke-Portscan", d:"does a simple TCP port scan using regular sockets, based rather loosely on Nmap"},
+  {t:"PowerUp", d:"acts as clearinghouse of common privilege escalation checks, along with some weaponization vectors"},
+  {t:"PowerView", d:"performs network and Windows domain enumeration and exploitation"},
+  {t:"Get-VaultCredential", d:"displays Windows vault credential objects, including plaintext web credentials"},
+  {t:"Set-CriticalProcess", d:"causes the machine to blue screen upon exiting PowerShell"}],
+ ms:[
+  {t:"Invocar-Portscan", d:"realiza un escaneo de puerto TCP simple utilizando sockets regulares, basado de manera bastante vaga en Nmap"},
+  {t:"Encendido", d:"actúa como centro de intercambio de información sobre controles comunes de escalada de privilegios, junto con algunos vectores de uso de armas"},
+  {t:"Vista de potencia", d:"Realiza enumeración y explotación de dominios de red y Windows"},
+  {t:"Obtener credencial de bóveda", d:"muestra objetos de credenciales de Windows Vault, incluidas credenciales web de texto sin formato"},
+  {t:"Establecer proceso crítico", d:"hace que la máquina aparezca en pantalla azul al salir de PowerShell"}],
+ e:`Place the options in the following order:
+Invoke-Portscan | does a simple TCP port scan using regular sockets, based rather loosely on Nmap
+PowerUp | acts as clearinghouse of common privilege escalation checks, along with some weaponization vectors
+PowerView | performs network and Windows domain enumeration and exploitation
+Get-VaultCredential | displays Windows vault credential objects, including plaintext web credentials
+Set-CriticalProcess | causes the machine to blue screen upon exiting PowerShell`,
+ es:`Coloca las opciones en el siguiente orden:
+Invocar-Portscan | realiza un escaneo de puerto TCP simple utilizando sockets regulares, basado de manera bastante vaga en Nmap
+Encendido | actúa como centro de intercambio de información sobre controles comunes de escalada de privilegios, junto con algunos vectores de uso de armas
+Vista de potencia | Realiza enumeración y explotación de dominios de red y Windows
+Obtener credencial de bóveda | muestra objetos de credenciales de Windows Vault, incluidas credenciales web de texto sin formato
+Establecer proceso crítico | hace que la máquina aparezca en pantalla azul al salir de PowerShell`},
+
+{q:"Which two tools can create a remote connection with a compromised system? (Choose two.)",
+ qs:"¿Cuáles dos herramientas pueden crear una conexión remota con un sistema comprometido? (Elige dos.)",
+ o:["Nmap","Mimikatz","Metasploit","BloodHound","Sysinternals"],
+ os:["Mapa N",
+     "Mimikatz",
+     "Metasploit",
+     "Perro de sangre",
+     "Sistemas internos"],
+ a:[2,4],
+ e:"After a system is compromised, basic port scans can identify systems or services of interest that can be further attacked to compromise valuable information. Remote access protocols can be used to communicate with a compromised system. Metasploit can be used to create an RDP connection. Using the Metasploit RDP Post-Exploitation Module enables RDP. It provides options to create and configure an account as a member of the Local Administrators and Remote Desktop Users group. Sysinternals is a suite of tools that can also communicate with a compromised system. It allows administrators to control Windows-based computers from a remote terminal.",
+ es:"Después de que un sistema queda comprometido, los escaneos básicos de puertos pueden identificar sistemas o servicios de interés que pueden atacarse posteriormente para comprometer información valiosa. Los protocolos de acceso remoto pueden usarse para comunicarse con un sistema comprometido. Metasploit puede usarse para crear una conexión RDP. El módulo de post-explotación RDP de Metasploit habilita RDP y ofrece opciones para crear y configurar una cuenta como miembro de los grupos Administradores locales y Usuarios de Escritorio remoto. Sysinternals es una suite de herramientas que también puede comunicarse con un sistema comprometido; permite a los administradores controlar equipos Windows desde un terminal remoto."},
+
+{q:"Which two options are PowerSploit modules/scripts? (Choose two.)",
+ qs:"¿Cuáles son las dos opciones de módulos/scripts de PowerSploit? (Elige dos.)",
+ o:["Get-ChildItem","Get-Keystrokes","Get-HotFix","Get-Process","Get-SecurityPackages"],
+ os:["Obtener elemento infantil",
+     "Obtener pulsaciones de teclas",
+     "Get-HotFix",
+     "Obtener proceso",
+     "Obtener paquetes de seguridad"],
+ a:[1,4],
+ e:"PowerSploit is a collection of PowerShell modules that can be used for post-exploitation and other phases of an assessment. Some popular PowerSploit modules and scripts are Get-SecurityPackages (enumerates all loaded security packages) and Get-Keystrokes (logs keys pressed, time, and the active window). PowerShell can be used for post-exploitation tasks, such as getting directory listings, copying and moving files, getting a list of running processes, and performing administrative tasks. Some of the most useful PowerShell commands are GetChildItem (list directories), GetProcess (gets a process listing), and Get-HotFix (obtains a list of all installed hotfixes).",
+ es:"PowerSploit es una colección de módulos PowerShell que pueden usarse para la post-explotación y otras fases de una evaluación. Algunos módulos y scripts populares de PowerSploit son Get-SecurityPackages (enumera todos los paquetes de seguridad cargados) y Get-Keystrokes (registra las teclas pulsadas, la hora y la ventana activa). PowerShell puede usarse para tareas de post-explotación, como obtener listados de directorios, copiar y mover archivos, obtener una lista de procesos en ejecución y realizar tareas administrativas. Algunos de los comandos más útiles de PowerShell son GetChildItem (lista directorios), GetProcess (obtiene un listado de procesos) y Get-HotFix (obtiene una lista de todas las actualizaciones instaladas)."},
+{q:"Why is it important to use Common Vulnerability Scoring System (CVSS) to reference the ratings of vulnerabilities identified when preparing the final penetration testing report?",
+ qs:"¿Por qué es importante utilizar el Sistema Común de Puntuación de Vulnerabilidades (CVSS) para hacer referencia a las calificaciones de vulnerabilidades identificadas al preparar el informe final de pruebas de penetración?",
+ o:["It is authorized by governments around the world.",
+    "It is an international standard for listing publicly known vulnerabilities.",
+    "It is easy to use.",
+    "It has been adopted by many tools, vendors, and organizations."],
+ os:["Está autorizado por gobiernos de todo el mundo.",
+     "Es un estándar internacional para enumerar vulnerabilidades conocidas públicamente.",
+     "Es fácil de usar.",
+     "Ha sido adoptado por muchas herramientas, proveedores y organizaciones"],
+ a:[3],
+ e:"In a typical final report, the section Findings should document technical details about whether or how the system under testing and related components may be exploited based on each vulnerability found. Using industry-accepted risk ratings for each vulnerability is a good idea, such as the Common Vulnerability Scoring System (CVSS). CVSS has been adopted by many tools, vendors, and organizations. Using an industry standard such as CVSS will increase the value of the final report.",
+ es:"En un informe final típico, la sección «Hallazgos» (Findings) debe documentar los detalles técnicos sobre si, y cómo, el sistema en prueba y los componentes relacionados pueden ser explotados en función de cada vulnerabilidad encontrada. Usar valoraciones de riesgo aceptadas por la industria para cada vulnerabilidad es una buena idea, como el Sistema Común de Puntuación de Vulnerabilidades (CVSS). CVSS ha sido adoptado por muchas herramientas, proveedores y organizaciones. Usar un estándar industrial como CVSS aumentará el valor del informe final."},
+
+{q:"A company hires a professional to perform penetration testing. The tester has identified and verified that one web application is vulnerable to SQL injection and cross-site scripting attacks. Which technical control measure should the tester recommend to the company?",
+ qs:"Una empresa contrata a un profesional para realizar pruebas de penetración. El evaluador ha identificado y verificado que una aplicación web es vulnerable a la inyección SQL y a ataques de secuencias de comandos entre sitios. ¿Qué medida de control técnico debe recomendar el evaluador a la empresa?",
+ o:["process-level remediation","role-based access control (RBAC)","multifactor authentication","user input sanitization"],
+ os:["remediación a nivel de proceso",
+     "Control de acceso basado en roles (RBAC)",
+     "autenticación multifactor",
+     "Sanitización de la entrada del usuario"],
+ a:[3],
+ e:"Parameterized queries best prevent SQL injection. Using input validation (sanitizing user input) best practices is recommended to mitigate and prevent vulnerabilities such as cross-site scripting, cross-site request forgery, SQL injection, command injection, XML external entities, and other vulnerabilities.",
+ es:"Las consultas parametrizadas previenen mejor la inyección SQL. Se recomienda usar las buenas prácticas de validación de entradas (sanitizar la entrada del usuario) para mitigar y prevenir vulnerabilidades como cross-site scripting, cross-site request forgery, inyección SQL, inyección de comandos, entidades externas XML y otras vulnerabilidades."},
+
+{q:"The IT security department of a company has developed an access policy for the datacenter. The policy specifies that the datacenter is locked between 5:30 pm through 7:45 am daily except for emergency access approved by the IT manager. What is the operational control implemented?",
+ qs:"El departamento de seguridad informática de una empresa ha desarrollado una política de acceso al centro de datos. La política especifica que el centro de datos está bloqueado entre las 5:30 p. m. y las 7:45 a. m. todos los días, excepto para el acceso de emergencia aprobado por el administrador de TI. ¿Cuál es el control operativo implementado?",
+ o:["mandatory vacations","job rotation","time-of-day restrictions","user training"],
+ os:["vacaciones obligatorias",
+     "rotación laboral",
+     "restricciones de hora del día",
+     "formación de usuarios"],
+ a:[2],
+ e:"With the time-of-day restrictions policy, the company can restrict user access based on the time of the day.",
+ es:"Con la política de restricciones por hora del día, la empresa puede restringir el acceso de los usuarios según la franja horaria del día."},
+
+{q:"A security audit for a company recommends that the company implement multifactor authentication for the datacenter access. Which solution would achieve the goal?",
+ qs:"Una auditoría de seguridad de una empresa recomienda que la empresa implemente una autenticación multifactor para el acceso al centro de datos. ¿Qué solución lograría el objetivo?",
+ o:["access control vestibule","biometric controls","video surveillance","minimum password requirements"],
+ os:["vestíbulo de control de acceso",
+     "controles biométricos",
+     "videovigilancia",
+     "requisitos mínimos de contraseña"],
+ a:[1],
+ e:"Biometric controls include fingerprint scanning, retinal scanning, and face recognition. Together with a strong password, biometric control can provide effective multifactor authentication.",
+ es:"Los controles biométricos incluyen lectura de huellas dactilares, escaneo de retina y reconocimiento facial. Junto con una contraseña fuerte, un control biométrico puede proporcionar una autenticación multifactor eficaz."},
+
+{q:"What are three examples of the items a penetration tester must clean from systems as part of the post-engagement cleanup process? (Choose three.)",
+ qs:"¿Cuáles son tres ejemplos de los elementos que un probador de penetración debe limpiar de los sistemas como parte del proceso de limpieza posterior al acoplamiento? (Elige tres.)",
+ o:["given passwords","network diagrams","shells","tools","system patches","tester-created credentials"],
+ os:["contraseñas dadas",
+     "diagramas de red",
+     "conchas",
+     "herramientas",
+     "parches del sistema",
+     "credenciales creadas por el evaluador"],
+ a:[2,3,5],
+ e:`When a tester has completed all the testing phases for a penetration test, It is very important to perform the post-engagement cleanup. Having the client or system owner validate that the cleanup efforts are sufficient is also very important. This is not always easy to accomplish, but providing a comprehensive list of activities performed on any systems under test will help.
+
+Examples of the items that a tester will want to be sure to clean from systems include:
+- Tester-created credentials: Remove any user accounts you created to maintain persistent access or for any other post-exploitation activity.
+- Shells: Remove shells spawned on exploited systems.
+- Tools: Remove any tools installed or run from the systems under test.`,
+ es:`Cuando un probador ha completado todas las fases de prueba de una penetración, es muy importante realizar la limpieza posterior al encargo. También es muy importante que el cliente o el propietario del sistema validen que los esfuerzos de limpieza son suficientes. Esto no siempre es fácil de lograr, pero proporcionar una lista completa de las actividades realizadas en los sistemas en prueba ayudará.
+
+Ejemplos de elementos que un probador querrá asegurarse de limpiar de los sistemas:
+- Credenciales creadas por el probador: elimine cualquier cuenta de usuario que haya creado para mantener el acceso persistente o para cualquier otra actividad de post-explotación.
+- Shells: elimine los shells abiertos en los sistemas explotados.
+- Herramientas: elimine cualquier herramienta instalada o ejecutada en los sistemas en prueba.`},
+
+{q:"Refer to the exhibit. Which Python data structure is used?",
+ qs:"Consulte la exposición. ¿Qué estructura de datos de Python se utiliza?",
+ o:["dictionary","array","list","tree"],
+ os:["diccionario",
+     "array",
+     "lista",
+     "árbol"],
+ a:[0],
+ e:"A dictionary is a collection of data values that are ordered using a key/value pair.",
+ es:"Un diccionario es una colección de valores de datos que se ordenan mediante un par clave/valor.",
+ img:"https://itexamanswers.net/wp-content/uploads/2023/10/Which_Python_data_structure_is_used.png"},
+
+{q:"Which statement describes the concept of Bash shell in operating systems?",
+ qs:"¿Qué declaración describe el concepto de shell Bash en sistemas operativos?",
+ o:["Bash shell is a command shell that supports interactive command execution only.",
+    "Bash shell is a Linux GUI.",
+    "Bash shell is a GUI that can be used in operating systems.",
+    "Bash shell is a command shell and language interpreter for an operating system."],
+ os:["Bash shell es un shell de comandos que solo admite la ejecución de comandos interactivos.",
+     "Bash shell es una GUI de Linux.",
+     "Bash shell es una GUI que se puede utilizar en sistemas operativos.",
+     "Bash shell es un shell de comandos y un intérprete de idioma para un sistema operativo"],
+ a:[3],
+ e:"Bash shell is a command shell and language interpreter available for operating systems such as Linux, macOS, and Windows. It allows for interactive or non-interactive command execution.",
+ es:"Bash shell es un shell de comandos y un intérprete de lenguaje disponible para sistemas operativos como Linux, macOS y Windows. Permite la ejecución de comandos interactiva o no interactiva."},
+
+{q:"Which three tools can be used to perform passive reconnaissance? (Choose three.)",
+ qs:"¿Cuáles tres herramientas se pueden utilizar para realizar reconocimiento pasivo? (Elige tres.)",
+ o:["Nmap","Dig","Enum4linux","Zenmap","Host","Nslookup"],
+ os:["Mapa N",
+     "Excavar",
+     "Enum4linux",
+     "Mapa zen",
+     "Anfitrión",
+     "Búsqueda de N"],
+ a:[1,4,5],
+ e:"Nslookup, Host, and Dig are DNS-based tools that can be used to perform passive reconnaissance. Nmap, Zenmap, and Enum4linux are active reconnaissance tools.",
+ es:"Nslookup, Host y Dig son herramientas basadas en DNS que pueden usarse para realizar reconocimiento pasivo. Nmap, Zenmap y Enum4linux son herramientas de reconocimiento activo."},
+
+{q:"An attacker uses John the Ripper to crack a password file. The attacker issued the ~$ john --list=formats command in Kali Linux. Which information is the attacker trying to find?",
+ qs:"Un atacante utiliza a John el Destripador para descifrar un archivo de contraseñas. El atacante emitió el comando ~$ john --list=formats en Kali Linux. ¿Qué información intenta encontrar el atacante?",
+ o:["the command line format to crack a password file",
+    "the password file format",
+    "the ciphertext formats supported by the current version",
+    "the output format supported by the current version"],
+ os:["el formato de línea de comando para descifrar un archivo de contraseña",
+     "El formato del archivo de contraseña",
+     "los formatos de texto cifrado admitidos por la versión actual",
+     "el formato de salida compatible con la versión actual"],
+ a:[2],
+ e:"John the Ripper is a popular tool for offline password cracking. John the Ripper can use search patterns and password files (or wordlists) to crack passwords. It supports different cracking modes and understands many ciphertext formats. To list the supported formats, the attacker can use the john --list=formats command.",
+ es:"John the Ripper es una popular herramienta de descifrado de contraseñas fuera de línea. John the Ripper puede usar patrones de búsqueda y archivos de contraseñas (o wordlists) para descifrar contraseñas. Admite diferentes modos de descifrado y entiende muchos formatos de texto cifrado. Para listar los formatos soportados, el atacante puede usar el comando john --list=formats."},
+
+{q:"What are two exploitation frameworks? (Choose two.)",
+ qs:"¿Cuáles son dos marcos de explotación? (Elige dos.)",
+ o:["BeEF","Proxychains","Tor","Metasploit","Encryption"],
+ os:["BeEF",
+     "Cadenas proxy",
+     "Tor",
+     "Metasploit",
+     "Cifrado"],
+ a:[0,3],
+ e:"Metasploit is a popular exploitation framework. Metasploit is installed in /usr/share/metasploit-framework by default in Kali Linux. BeEF is an exploitation framework for web application testing. Tor, Proxychains, and Encryption are tools for evasion.",
+ es:"Metasploit es un popular framework de explotación. Metasploit está instalado por defecto en /usr/share/metasploit-framework en Kali Linux. BeEF es un framework de explotación para pruebas de aplicaciones web. Tor, Proxychains y la encriptación son herramientas de evasión."}
+];
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+let order=[];          // índices de preguntas (orden de presentación)
+let answers=[];        // respuestas del usuario
+let checked=[];        // ¿ya comprobada?
+let current=0;
+let lang="both";       // 'en' | 'es' | 'both'
+let immediate=false, shuffleO=true, useTimer=true;
+let startTime=0, timerInt=null, elapsed=0;
+let mSel=-1;            // concepto seleccionado en el ejercicio de relación (-1 = ninguno)
+
+const $=id=>document.getElementById(id);
+
+function shuffle(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function newAnswer(qi){
+  return P[qi].match ? new Array(P[qi].match.length).fill(-1) : [];
+}
+function isMatch(qi){ return !!P[qi].match; }
+
+/* ---- utilidades de idioma ---- */
+function t(en,es){ return lang==='en'?en : lang==='es'?es : en+" / "+es; }
+function block(en,es){
+  if(lang==='en') return `<div class="t-en">${escapeHtml(en)}</div>`;
+  if(lang==='es') return `<div class="t-es">${escapeHtml(es)}</div>`;
+  return `<div class="t-en">${escapeHtml(en)}</div><div class="t-es">${escapeHtml(es)}</div>`;
+}
+function pair(en,es){
+  if(lang==='en') return escapeHtml(en);
+  if(lang==='es') return escapeHtml(es);
+  if(en===es) return `<span class="o-en">${escapeHtml(en)}</span>`;
+  return `<span class="o-en">${escapeHtml(en)}</span><span class="o-es">${escapeHtml(es)}</span>`;
+}
+function mTerm(en,es){
+  if(lang==='en') return `<b>${escapeHtml(en)}</b>`;
+  if(lang==='es') return `<b>${escapeHtml(es)}</b>`;
+  return `<b>${escapeHtml(en)}</b>` + (en!==es?` <span class="m-alt">· ${escapeHtml(es)}</span>`:"");
+}
+function mDesc(en,es){
+  if(lang==='en') return `<div class="d-en">${escapeHtml(en)}</div>`;
+  if(lang==='es') return `<div class="d-es">${escapeHtml(es)}</div>`;
+  if(en===es) return `<div class="d-en">${escapeHtml(en)}</div>`;
+  return `<div class="d-en">${escapeHtml(en)}</div><div class="d-es">${escapeHtml(es)}</div>`;
+}
+function expHtml(q){
+  if(lang==='en') return escapeHtml(q.e);
+  if(lang==='es') return escapeHtml(q.es);
+  return escapeHtml(q.e)+`<span class="ex-es">${escapeHtml(q.es)}</span>`;
+}
+function expText(q){ return lang==='en'?q.e : lang==='es'?q.es : q.e+"\n\n"+q.es; }
+
+/* ============ INICIO ============ */
+document.querySelectorAll(".langopt").forEach(el=>{
+  el.onclick=()=>{
+    document.querySelectorAll(".langopt").forEach(x=>x.classList.remove("on"));
+    el.classList.add("on");
+    lang=el.dataset.lang;
+  };
+});
+
+$("btnStart").onclick=()=>start();
+$("btnRetry").onclick=()=>show("inicio");
+$("btnHome").onclick=()=>{show("inicio");stopTimer();};
+$("btnToggleReview").onclick=()=>{
+  const r=$("review");
+  r.classList.toggle("hidden");
+  $("btnToggleReview").textContent = r.classList.contains("hidden")?"👁 Ver retroalimentación":"🙈 Ocultar retroalimentación";
+  if(!r.classList.contains("hidden")) r.scrollIntoView({behavior:"smooth"});
+};
+
+function show(id){
+  ["inicio","examen","resultados"].forEach(s=>$(s).classList.toggle("hidden", s!==id));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function start(){
+  immediate=$("optImmediate").checked;
+  shuffleO=$("optShuffleO").checked;
+  useTimer=$("optTimer").checked;
+  const shQ=$("optShuffleQ").checked;
+
+  order = shQ ? shuffle(P.map((_,i)=>i)) : P.map((_,i)=>i);
+  answers = order.map(qi=>newAnswer(qi));
+  checked = order.map(()=>false);
+  current=0;
+
+  $("qTotal").textContent=order.length;
+  $("timer").classList.toggle("hidden",!useTimer);
+  $("btnCheck").hidden=!immediate;
+
+  elapsed=0; startTimer();
+  show("examen");
+  render();
+}
+
+/* ============ CRONÓMETRO ============ */
+function startTimer(){
+  stopTimer();
+  startTime=Date.now();
+  $("timer").textContent="⏱ 00:00";
+  timerInt=setInterval(()=>{
+    elapsed=Math.floor((Date.now()-startTime)/1000);
+    $("timer").textContent="⏱ "+fmt(elapsed);
+  },1000);
+}
+function stopTimer(){ if(timerInt){clearInterval(timerInt);timerInt=null;} }
+function fmt(s){const m=String(Math.floor(s/60)).padStart(2,"0");const x=String(s%60).padStart(2,"0");return m+":"+x;}
+
+function answeredCount(){
+  return order.filter((qi,i)=>{
+    const a=answers[i];
+    return isMatch(qi) ? a.every(v=>v>=0) : a.length>0;
+  }).length;
+}
+
+/* ============ RENDER PREGUNTA ============ */
+function render(){
+  const qi=order[current], q=P[qi];
+  $("qNum").textContent=current+1;
+  $("bar").style.width=((current)/order.length*100)+"%";
+
+  if(q.match){
+    $("typeTag").textContent="📌 Match / Relaciona";
+  }else{
+    const n=q.a.length;
+    $("typeTag").textContent = n>1 ? t(`Choose ${n}`,`Elige ${n}`) : t("Select one answer","Elige una respuesta");
+  }
+  $("scoreLive").textContent = immediate ? "Retroalimentación inmediata activada" : "";
+  $("btnCheck").hidden = !immediate || checked[current];
+
+  $("qText").innerHTML = block(q.q, q.qs);
+
+  const imgBox=$("qImg"); imgBox.innerHTML="";
+  if(q.img){
+    const im=document.createElement("img");
+    im.src=q.img; im.className="exhibit"; im.alt="Exhibit";
+    im.onerror=()=>{imgBox.innerHTML='<div class="rev-exp">⚠️ No se pudo cargar la imagen del exhibit.</div>';};
+    imgBox.appendChild(im);
+    $("qHint").textContent="🖼 Refer to the exhibit / Consulta el exhibit";
+  }else{ $("qHint").textContent=""; }
+
+  const box=$("choices"); box.innerHTML="";
+
+  if(q.match){
+    mSel=-1;
+    const hint=document.createElement("div");
+    hint.className="m-hint";
+    box.appendChild(hint);
+
+    const wrap=document.createElement("div");
+    wrap.className="match-wrap";
+    const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");
+    svg.setAttribute("class","mlines"); svg.setAttribute("aria-hidden","true");
+    wrap.appendChild(svg);
+
+    const colT=document.createElement("div"); colT.className="mcol";
+    const colD=document.createElement("div"); colD.className="mcol";
+    colT.innerHTML=`<div class="m-head">${t("Concepts","Conceptos")}</div>`;
+    colD.innerHTML=`<div class="m-head">${t("Descriptions","Descripciones")}</div>`;
+
+    q.match.forEach((mt,k)=>{
+      const b=document.createElement("button");
+      b.type="button"; b.className="m-term"; b.dataset.k=k;
+      const esTerm=q.ms[k].t;
+      b.innerHTML = lang==='es'
+        ? `<span>${escapeHtml(esTerm)}</span>`
+        : `<span>${escapeHtml(mt.t)}</span>` + (lang==='both' && esTerm!==mt.t ? `<span class="m-es">${escapeHtml(esTerm)}</span>` : "");
+      b.addEventListener("click",()=>mPickTerm(k));
+      colT.appendChild(b);
+    });
+
+    const idxs=q.match.map((_,x)=>x);
+    const shown=shuffleO?shuffle(idxs):idxs;
+    shown.forEach(i=>{
+      const b=document.createElement("button");
+      b.type="button"; b.className="m-desc"; b.dataset.i=i;
+      const en=q.match[i].d, es=q.ms[i].d;
+      b.innerHTML = (lang==='en' || en===es) ? `<span class="d-en">${escapeHtml(en)}</span>`
+        : (lang==='es') ? `<span class="d-es">${escapeHtml(es)}</span>`
+        : `<span class="d-en">${escapeHtml(en)}</span><span class="d-es">${escapeHtml(es)}</span>`;
+      b.addEventListener("click",()=>mPickDesc(i));
+      colD.appendChild(b);
+    });
+
+    wrap.appendChild(colT); wrap.appendChild(colD);
+    box.appendChild(wrap);
+    mPaint();
+    drawLines();
+  }else{
+    const idxs=q.o.map((_,i)=>i);
+    const shown=shuffleO?shuffle(idxs):idxs;
+    shown.forEach(oi=>{
+      const lab=document.createElement("label");
+      lab.className="choice";
+      const multi=q.a.length>1;
+      lab.innerHTML=`<input type="${multi?'checkbox':'radio'}" name="opt"><span>${pair(q.o[oi],q.os[oi])}</span>`;
+      lab.dataset.oi=oi;
+      const sel = answers[current].includes(oi);
+      lab.classList.toggle("sel",sel);
+      lab.querySelector("input").checked=sel;
+      lab.querySelector("input").addEventListener("change",()=>select(oi,lab,multi));
+      if(checked[current]) lab.querySelector("input").disabled=true;
+      box.appendChild(lab);
+    });
+  }
+
+  $("fb").classList.add("hidden");
+  if(checked[current]) paintFeedback();
+
+  $("btnPrev").disabled = current===0;
+  $("btnNext").hidden = current===order.length-1;
+  $("btnFinish").classList.toggle("hidden", current!==order.length-1);
+
+  updateAnswered();
+}
+
+function updateAnswered(){
+  $("answered").textContent=`Respondidas: ${answeredCount()}/${order.length}`;
+}
+
+/* ---- ejercicios de relación: concepto → descripción con línea ---- */
+function mHintText(){
+  const ans=answers[current]||[];
+  if(checked[current]) return t("Connections locked","Conexiones bloqueadas");
+  if(mSel>=0) return t("Now click the description that matches it","Ahora haz clic en la descripción que corresponda");
+  if(ans.length && ans.every(v=>v>=0)) return t("All connected — click a concept, then another description to change it","Todo conectado: haz clic en un concepto y luego en otra descripción para cambiarlo");
+  return t("Click a concept, then click its description to join them with a line","Haz clic en un concepto y luego en su descripción para unirlos con una línea");
+}
+function mPaint(){
+  const box=$("choices");
+  const hint=box.querySelector(".m-hint");
+  if(hint) hint.textContent=mHintText();
+  const ans=answers[current]||[];
+  box.querySelectorAll(".m-term").forEach(b=>{
+    const k=+b.dataset.k;
+    b.classList.toggle("on",k===mSel);
+    b.classList.toggle("linked",ans[k]>=0);
+  });
+  box.querySelectorAll(".m-desc").forEach(b=>{
+    b.classList.toggle("used",ans.indexOf(+b.dataset.i)>=0);
+  });
+}
+function mPickTerm(k){
+  if(checked[current]) return;
+  mSel = (mSel===k ? -1 : k);
+  mPaint();
+}
+function mPickDesc(i){
+  if(checked[current]) return;
+  const ans=answers[current];
+  if(mSel<0){                       // sin concepto seleccionado: enfocar el concepto ya ligado
+    const k=ans.indexOf(i);
+    if(k>=0){ mSel=k; mPaint(); }
+    return;
+  }
+  if(ans[mSel]===i){                // clic en la misma descripción: deshacer
+    ans[mSel]=-1;
+  }else{                            // una descripción no puede repetirse
+    for(let k=0;k<ans.length;k++) if(ans[k]===i) ans[k]=-1;
+    ans[mSel]=i;
+  }
+  mSel=-1;
+  mPaint(); updateAnswered(); drawLines();
+}
+function drawLines(){
+  const box=$("choices");
+  const wrap=box ? box.querySelector(".match-wrap") : null;
+  if(!wrap) return;
+  const svg=wrap.querySelector(".mlines");
+  const wr=wrap.getBoundingClientRect();
+  if(!wr.width || !wr.height) return;
+  svg.setAttribute("viewBox",`0 0 ${wr.width} ${wr.height}`);
+  const ans=answers[current]||[];
+  let out="";
+  wrap.querySelectorAll(".m-term").forEach(tb=>{
+    const k=+tb.dataset.k, v=ans[k];
+    if(!(v>=0)) return;
+    const db=wrap.querySelector('.m-desc[data-i="'+v+'"]');
+    if(!db) return;
+    const a=tb.getBoundingClientRect(), b=db.getBoundingClientRect();
+    const x1=a.right-wr.left, y1=a.top+a.height/2-wr.top;
+    const x2=b.left-wr.left,  y2=b.top+b.height/2-wr.top;
+    const dx=Math.max(26,(x2-x1)*0.45);
+    const cls=checked[current] ? (v===k?" ok":" no") : "";
+    out+=`<path class="ln${cls}" d="M${x1} ${y1} C${x1+dx} ${y1}, ${x2-dx} ${y2}, ${x2} ${y2}"/>`;
+    out+=`<circle class="ln-dot${cls}" cx="${x1}" cy="${y1}" r="3.2"/>`;
+    out+=`<circle class="ln-dot${cls}" cx="${x2}" cy="${y2}" r="3.2"/>`;
+  });
+  svg.innerHTML=out;
+}
+window.addEventListener("resize",drawLines);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>drawLines());
+
+function select(oi,lab,multi){
+  if(checked[current]) return;
+  if(multi){
+    const i=answers[current].indexOf(oi);
+    if(i>=0) answers[current].splice(i,1); else answers[current].push(oi);
+  }else{
+    answers[current]=[oi];
+  }
+  [...$("choices").children].forEach(c=>{
+    const v=answers[current].includes(+c.dataset.oi);
+    c.classList.toggle("sel",v);
+    const inp=c.querySelector("input");
+    if(inp) inp.checked=v;
+  });
+  updateAnswered();
+}
+
+$("btnPrev").onclick=()=>{ if(current>0){current--;render();} };
+$("btnNext").onclick=()=>{ if(current<order.length-1){current++;render();} };
+$("btnCheck").onclick=()=>{ checkCurrent(); };
+$("btnFinish").onclick=()=>{ finish(); };
+
+function checkCurrent(){
+  if(checked[current]) return;
+  const qi=order[current];
+  const answered = isMatch(qi) ? answers[current].every(v=>v>=0) : answers[current].length>0;
+  if(!answered){ alert("Please select an answer / Selecciona una respuesta antes de comprobar."); return; }
+  checked[current]=true;
+  $("btnCheck").hidden=true;
+  paintFeedback();
+}
+
+function isCorrect(qi,ans){
+  const q=P[qi];
+  if(q.match){
+    if(ans.length!==q.match.length) return false;
+    return ans.every((v,k)=>v===k);
+  }
+  if(ans.length!==q.a.length) return false;
+  return q.a.every(x=>ans.includes(x));
+}
+
+function paintFeedback(){
+  const qi=order[current], q=P[qi], ans=answers[current];
+  const ok=isCorrect(qi,ans);
+  let correctHtml="", yourHtml="";
+
+  if(q.match){
+    const box=$("choices");
+    const hint=box.querySelector(".m-hint");
+    if(hint) hint.hidden=true;
+    mSel=-1;
+    const wrap=box.querySelector(".match-wrap");
+    if(wrap){
+      wrap.querySelectorAll(".m-term").forEach(b=>{
+        const k=+b.dataset.k;
+        b.disabled=true;
+        b.classList.add(ans[k]===k?"ok":"no");
+      });
+      wrap.querySelectorAll(".m-desc").forEach(b=>{
+        const i=+b.dataset.i, k=ans.indexOf(i);
+        b.disabled=true;
+        if(k<0) b.classList.add("dim");
+        else b.classList.add(k===i?"ok":"no");
+      });
+    }
+    drawLines();
+    correctHtml=q.match.map((m,k)=>
+      `<div class="ans-item">${mTerm(m.t,q.ms[k].t)}${mDesc(m.d,q.ms[k].d)}</div>`).join("");
+    yourHtml=q.match.map((m,k)=>
+      `<div class="ans-item">${mTerm(m.t,q.ms[k].t)}${ans[k]>=0?mDesc(q.match[ans[k]].d,q.ms[ans[k]].d):'<div class="d-en">—</div>'}</div>`).join("");
+  }else{
+    [...$("choices").children].forEach(c=>{
+      const oi=+c.dataset.oi;
+      const inp=c.querySelector("input"); inp.disabled=true;
+      c.classList.remove("sel");
+      if(q.a.includes(oi)) c.classList.add("correct");
+      else if(ans.includes(oi)) c.classList.add("wrong");
+      else c.classList.add("dim");
+      inp.checked=ans.includes(oi);
+    });
+    const asList = arr => arr.map(x => `<div class="ans-item">${pair(q.o[x], q.os[x])}</div>`).join("");
+    correctHtml = asList(q.a);
+    yourHtml = ans.length ? asList(ans) : "<i>Sin responder</i>";
+  }
+
+  const fb=$("fb");
+  fb.className="fb "+(ok?"good":"bad");
+  fb.innerHTML=`<b class="tag">${ok?"✅ ¡Correcto! / Correct!":"❌ Incorrecto / Incorrect"}</b>
+    <div style="margin-bottom:6px"><b>${t("Correct answer:","Respuesta correcta:")}</b></div>${correctHtml}
+    <div style="margin-top:8px"><b>${t("Your answer:","Tu respuesta:")}</b></div>${yourHtml}
+    <div style="margin-top:8px"><b>${t("Explanation:","Explicación:")}</b><div class="exp-txt">${expHtml(q)}</div></div>`;
+}
+
+/* ============ RESULTADOS ============ */
+function finish(){
+  const unanswered=order.length-answeredCount();
+  if(unanswered>0 && !confirm(`Tienes ${unanswered} pregunta(s) sin responder. ¿Deseas terminar el examen?`)) return;
+  stopTimer();
+  elapsed = useTimer ? Math.floor((Date.now()-startTime)/1000) : elapsed;
+
+  let correct=0;
+  order.forEach((qi,i)=>{ if(isCorrect(qi,answers[i])) correct++; });
+  const total=order.length;
+  const pct=Math.round((correct/total)*100);
+  const pass=pct>=70;
+
+  $("pct").textContent=pct+"%";
+  const deg=Math.round(pct*3.6);
+  $("ring").style.background=`conic-gradient(${pass?'#15803d':'#b91c1c'} ${deg}deg, #eceff3 ${deg}deg)`;
+  const v=$("verdict");
+  v.className="verdict "+(pass?"pass":"fail");
+  v.textContent = pass ? "✔ APROBADO" : "✖ REPROBADO";
+  $("resumen").textContent = pass
+    ? `¡Felicidades! Respondiste correctamente ${correct} de ${total} preguntas (mínimo 70%).`
+    : `Obtuviste ${correct} de ${total} respuestas correctas. Necesitas al menos 70% (≥ ${Math.ceil(total*0.7)} preguntas) para aprobar. Revisa la retroalimentación e inténtalo de nuevo.`;
+  $("rCorrect").textContent=correct;
+  $("rWrong").textContent=total-correct;
+  $("rTime").textContent=fmt(elapsed);
+  $("btnToggleReview").textContent="👁 Ver retroalimentación";
+  $("review").classList.add("hidden");
+
+  buildReview();
+  show("resultados");
+}
+
+function buildReview(){
+  const rev=$("review"); rev.innerHTML="";
+  order.forEach((qi,i)=>{
+    const q=P[qi], ans=answers[i], ok=isCorrect(qi,ans);
+    const card=document.createElement("div");
+    card.className="rev-card "+(ok?"ok":"no");
+
+    let ua, ca;
+    if(q.match){
+      ua = q.match.map((m,k)=>
+        `<div class="ans-item">${mTerm(m.t,q.ms[k].t)}${ans[k]>=0?mDesc(q.match[ans[k]].d,q.ms[ans[k]].d):'<div class="d-en">—</div>'}</div>`).join("");
+      ca = q.match.map((m,k)=>
+        `<div class="ans-item">${mTerm(m.t,q.ms[k].t)}${mDesc(m.d,q.ms[k].d)}</div>`).join("");
+    }else{
+      const asList = arr => arr.map(x => `<div class="ans-item">${pair(q.o[x], q.os[x])}</div>`).join("");
+      ua = ans.length ? asList(ans) : "<i>Sin responder</i>";
+      ca = asList(q.a);
+    }
+
+    card.innerHTML=`
+      <span class="badge ${ok?'ok':'no'}">${ok?'CORRECTA':'INCORRECTA'} · Pregunta ${i+1}</span>
+      <div class="rev-q">${block(q.q,q.qs)}</div>
+      <div class="rev-ans"><span class="lab">Tu respuesta:</span> <span class="${ok?'v ok':'v no'}">${ua}</span></div>
+      <div class="rev-ans"><span class="lab">Respuesta correcta:</span> <span class="v ok">${ca}</span></div>
+      <div class="rev-exp"><b>💡 Retroalimentación / Feedback:</b>\n${expHtml(q)}</div>`;
+    rev.appendChild(card);
+  });
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+</script>
+</body>
+</html>
